@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Configuration - Swinburne FSAE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Vehicle Configuration - Swinburne FSAE</h1>
+    <p>
+        <select id="configuration">
+            <option value="">New configuration</option>
+            <optgroup label="Existing configurations">
+                <option value="Configuration 1">Configuration 1</option>
+                <option value="Configuration 2">Configuration 2</option>
+            </optgroup>
+        </select>
+    </p>
+    <form action="/configuration" method="post">
+        <table>
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Value</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" name="key" value="name" readonly></td>
+                    <td><input type="text" name="value" required></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><input type="text" name="key" required></td>
+                    <td><input type="text" name="value" required></td>
+                    <td><input type="button" value="Delete"></td>
+                </tr>
+            </tbody>
+        </table>
+        <p><input type="button" value="Add configuration item"></p>
+        <input type="submit" value="Save">
+        <input type="reset" value="Reset">
+    </form>
+</body>
+</html>
