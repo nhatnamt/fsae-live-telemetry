@@ -1,4 +1,7 @@
+from random import random
+from time import sleep
 from flask import Flask, send_from_directory, jsonify, request
+from src.event import Event
 
 CONFIGURATION_PAGE = 'configuration.html'
 SENSOR_PAGE = 'sensors.html'
@@ -39,6 +42,15 @@ def post_configuration():
 
     # return jsonify({"name": name} | form_data)
     return send_from_directory('static', CONFIGURATION_PAGE)
+
+@app.get("/sensordata")
+def sensor_data():
+    def data_generator():
+        while True:
+            sleep(random())
+            name = "one" if random() > 0.8 else "two"
+            yield str(Event(name, random()))
+    return data_generator(), {"Content-Type": "text/event-stream"}
 
 if __name__ == "__main__":
     app.run(debug=True)
