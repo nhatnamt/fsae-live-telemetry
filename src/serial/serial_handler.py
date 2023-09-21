@@ -3,6 +3,7 @@ from enum import Enum
 import serial.tools.list_ports
 import serial
 import serial.threaded
+import random
 
 class rx_state(Enum):
     FINDING_1ST_FLAG        = 1
@@ -20,6 +21,19 @@ class serial_handler:
         self.__can_id           = 0
         self.__rx_buffer        = []
         self.__rx_packet_count    = 0
+
+    def generate_psuedo_data(self):
+        tx_buffer = []
+        tx_buffer.append(0x33) # starting flag
+        tx_buffer.append(0x17)
+        tx_buffer.append(0x08) # packet length
+        tx_buffer.append(0x01) # can id
+        tx_buffer.append(0x02)
+        for i in range(0, 8):
+            val = random.randint(0, 255)
+            tx_buffer.append(val)
+
+        return tx_buffer
 
     #Gets all the available ports
     def get_available_port(self):
@@ -80,14 +94,6 @@ class serial_handler:
 
                     # remember to check crc16
                     return self.__can_id, self.__rx_buffer[3:-2] #return can_id and data
-                    
-                    # print
-                    # for i in self.__rx_buffer:
-                    #     print(hex(i), end=' ')
-                    # print(' ')
-
-                    # if self.__can_id == 0x255:
-                    #     print((self.__rx_buffer[3]*256 + self.__rx_buffer[4])/10.0)
 
             else:
                 self.__rx_state = rx_state.FINDING_1ST_FLAG
