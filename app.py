@@ -3,8 +3,10 @@ from time import sleep
 from flask import Flask, send_from_directory, jsonify, request
 from queue import Queue
 
+HOME_PAGE = 'home.html'
 CONFIGURATION_PAGE = 'configuration.html'
 SENSOR_PAGE = 'sensors.html'
+ABOUT_PAGE = 'about.html'
 
 app = Flask(__name__, static_url_path="/")
 listeners = []
@@ -18,7 +20,7 @@ configuration = {
 
 @app.route('/')
 def home():
-    return send_from_directory('static', SENSOR_PAGE)
+    return send_from_directory('static', HOME_PAGE)
 
 @app.get("/configuration")
 def get_configuration():
