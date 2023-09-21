@@ -2,6 +2,7 @@ from random import random
 from time import sleep
 from flask import Flask, send_from_directory, jsonify, request
 from queue import Queue
+from src.sample_event_generator import SampleEventSource
 
 HOME_PAGE = 'home.html'
 CONFIGURATION_PAGE = 'configuration.html'
@@ -58,6 +59,5 @@ def events_generator():
         yield str(q.get())
 
 if __name__ == "__main__":
-    from src.sample_event_generator import SampleEventSource
     SampleEventSource(listeners).start()
     app.run(debug=True)

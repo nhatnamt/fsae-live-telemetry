@@ -1,5 +1,5 @@
 from threading import Thread
-from random import random
+from random import random,randint
 from time import sleep
 import queue
 
@@ -9,10 +9,17 @@ else:
     from src.event import Event
 
 def random_event_generator():
+    idList = ["FL_temp","FL_torque","FL_rpm",
+                "FR_temp","FR_torque","FR_rpm",
+                "RL_temp","RL_torque","RL_rpm",
+                "RR_temp","RR_torque","RR_rpm",
+                "left_coolant_temp","right_coolant_temp","rear_coolant_temp",
+                "cell_max_voltage","cell_min_voltage","pack_voltage","pack_power","current_temp","lv_battery"]
     while True:
-        sleep(0.1)
-        name = "one" if random() > 0.8 else "two"
-        yield Event(name, random())
+        for id in idList:
+            event = Event("textData", id, randint(0,100))
+            yield event
+            sleep(0.01)
 
 class SampleEventSource:
     def __init__(self, listeners: list[queue.Queue] = None):
