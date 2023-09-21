@@ -18,7 +18,8 @@ def home():
 
 @app.get("/configuration")
 def get_configuration():
-    return jsonify(configuration)
+    #return jsonify(configuration)
+    return send_from_directory('static', CONFIGURATION_PAGE)
 
 @app.post("/configuration")
 def post_configuration():
