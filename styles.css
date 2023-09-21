@@ -1,269 +1,145 @@
-
-/* Custom properties/variables  */
-:root {
-  --main-white: #f0f0f0;
-  --main-black: #000000;
-  --main-blue: #45567d;
-  --main-gray: #303841;
-}
-
-html {
-  box-sizing: border-box;
-  font-size: 50%;
-  scroll-behavior: smooth;
-  
-}
-
-/* Base reset */
+/* Reset some default styles */
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-/* box-sizing and font sizing */
-
-/* 1200px / 16px = 75em */
-@media (max-width: 20000em) {
-  html {
-    font-size: 60%;
-  }
+/* Define custom colors */
+:root {
+  --main-red: #FF0000;
+  --main-white: #FFFFFF;
+  --main-black: #000000;
 }
 
-/* 980px / 16px = 61.25em */
-@media (max-width: 20000em) {
-  html {
-    font-size: 58%;
-  }
-}
-
-/* 460px / 16px = 28.75em */
-@media (max-width: 20000em) {
-  html {
-    font-size: 55%;
-  }
-}
-
-/* Start Base styles */
-.home{
-  margin: 5%;
-  padding: 4%;
-}
+/* Base styles */
 body {
   font-family: 'Poppins', sans-serif;
-  font-size: 1.8rem; /* 18px */
+  font-size: 18px;
   font-weight: 400;
   line-height: 1.4;
-  color: var(--main-white);
-  background-color: black;
-  background-position:left center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  color: var(--main-white); /* Set text color to white */
+  background: url('symbol3.jpg') center top no-repeat;
   background-size: cover;
+  position: relative;
 }
 
-h1,
-h2 {
-  font-family: 'Raleway', sans-serif;
-  font-weight: 200;
+/* Add a black background to the top 30% of the page */
+body:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  background-color: black;
+  z-index: -1; /* Place it behind the content */
+}
+
+/* Header styles */
+#homepage-logo {
+  position: relative;
+  padding: 5%;
+}
+
+#logo {
+  width: 200px;
+  height: 100px;
+}
+
+#logo3 {
+  position: absolute;
+  top: 12%;
+  right: 12%;
+  width: 300px;
+  height: 100px;
+}
+
+figcaption {
+  letter-spacing: 8px;
+  font-weight: bold;
+  font-style: italic;
+  font-family: 'bazooka',sans-serif;
+  word-spacing: 0.1em;
+  font-size: 55px;
+}
+
+.homepara {
+  letter-spacing: 1px;
+  font-size: 25px;
+}
+
+/* Navigation bar styles */
+.navbar {
+  overflow: hidden;
+  display: inline-block;
+}
+
+.navbar a {
+  float: right;
   text-align: center;
-}
-
-h1 {
-  font-size:5rem;
-}
-
-h2 {
-  font-size: 4.2rem;
-}
-
-ul {
-  list-style: none;
-  font-size: 1.8rem;
-}
-
-a {
+  padding: 10px 20px;
+  font-size: 17px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
   text-decoration: none;
-  color: var(--main-white);
+  transition: background-color 0.3s, color 0.3s; /* Hover animation */
 }
 
-a:link {
-	color: var(--main-white);
-}
-a:hover { 
-	color: var(--main-white);
-}
-a:visited {
-	color: ;
+.navbar a:hover {
+  background-color: black;
+  color: black;
 }
 
-/*End Base Styles*/
-
-/**Start Navigation Bar**/
-
-/*Navbar Padding and Logo Size*/
-
-.navbar table thead tr td.links{
-	padding:10px;
-	font-weight:700;
-}
-
-.navbar table thead tr td.logo{ 
-	width: 100em;
-	font-weight:700;
-}
-
-/*Navbar Background*/
-
-nav{
-	border: 1px solid white;
-	border-left: none; 
-	border-right: none; 
-	border-top: none;
-  border-style: ridge;
-}
-
-.navbar{
-	overflow: hidden;
-	display: inline-block;
-}
-/*Navigation Bar Links*/
-.navbar a { 
-    float: right;
-    text-align: center;
-    padding: 10px 8px;
-    font-size: 17px;
-	position:relative;
-    border-radius: 0.15em;
-}
-
-/*NavBar Hover Transition Color*/
-.navbar a:hover{
-	background-color: lightslategray;
-	color: lightslategray;
-	transition: 2s;
-}
-
-/*Active Navbar*/
 .navbar a.active {
-	background-color: lightslategray;
-	color:lightslategray;
+  background-color: var(--main-red);
+  color: var(--main-red);
 }
 
-/**End Navigation Bar**/
-
-/**Start Home Page**/
-
-.homepage-logo{
-	position:absolute;
-	top:5%;
-	left:2%;
-}
-.logo3{
-  position:absolute;
-  top:5%;
-  left:80%;
-}
-
-figcaption{
-	letter-spacing:8px;
-	font-weight:100;
-	font-size:55px;
-}
-
-.homepara{
-	letter-spacing:1px;
-  font-size:25px
-}
-/*Buttons*/
+/* Home page button styles */
 .homebtn {
-	padding: 0 10px;
-    padding-top: 15px;
-    margin: 10px;
-    height: 40px;
-    display: inline;
-    font-size: 15px;
-    font-weight: 5000;
-    text-transform: uppercase;
-    border: 3px solid ;
-    border-radius: 2px;
-    background: transparent;
-    cursor: crosshair;
-    color: var(--main-white);
-	border-radius:10em;
-}
-.row-about a{
-	color: white;
+  padding: 15px 30px;
+  margin: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 3px solid white;
+  border-radius: 25px;
+  background: transparent;
+  cursor: pointer;
+  color: white;
 }
 
-.row-about{
-	display: inline-block;
+/* About section styles */
+.row-about {
+  display: flex;
+  justify-content: center;
   margin-top: 8%;
 }
 
 .column-about {
-    float: left;
-    width: 29%;
-    margin-bottom: 16px;
+  flex: 1;
+  margin: 0 1%;
 }
 
-@media screen and (max-width: 100px) {
-.column-about {
-	width: 100%;
-	display: block;
-}
+/* Footer styles */
+#homepage-footer {
+  position: absolute;
+  bottom: 0;
 }
 
-#homepage-footer{
-	position:absolute;
-	bottom:0;
-}
-	
-/**End Home Page**/
-
-/* Footer */
 footer {
-	font-weight: 300;
-	display: flex;
-	justify-content: space-evenly;
-	padding: 10px;
-	position:absolute;
-bottom:0;}
-
-footer > p {
-    margin: 5px;
-}
-
-footer i {
-    vertical-align: middle;
-}
-
-fieldset {	
-	border: none;
-}
-
-input {
-	display: inline;
-}
-/*End Footer*/
-
-
-/* End All Other Pages */
-
-input[type="file"] {
-  display: none;
-}
-
-ul {
-  list-style-type: none;
-}
-.container li {
-  font-weight: 500;
-  background-color: #eff5ff;
-  color: #025bee;
-  margin-bottom: 1em;
-  padding: 1.1em 1em;
-  border-radius: 0.3em;
+  font-weight: 300;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  padding: 10px;
+  position: absolute;
+  bottom: 0;
 }
 
+footer p {
+  margin: 5px;
+}
+
+/* Additional styles can be added as needed */
