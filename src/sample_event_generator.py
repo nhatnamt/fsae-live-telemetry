@@ -10,7 +10,7 @@ else:
 
 def random_event_generator():
     while True:
-        sleep(random())
+        sleep(0.1)
         name = "one" if random() > 0.8 else "two"
         yield Event(name, random())
 
