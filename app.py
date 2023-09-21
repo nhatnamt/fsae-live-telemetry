@@ -1,9 +1,13 @@
+from random import random
+from time import sleep
 from flask import Flask, send_from_directory, jsonify, request
+from queue import Queue
 
 CONFIGURATION_PAGE = 'configuration.html'
 SENSOR_PAGE = 'sensors.html'
 
 app = Flask(__name__, static_url_path="/")
+listeners = []
 
 # TODO: load from file?
 configuration = {
@@ -38,8 +42,20 @@ def post_configuration():
     configuration[name] = form_data
     # TODO: save to file
 
-    # return jsonify({"name": name} | form_data)
-    return send_from_directory('static', CONFIGURATION_PAGE)
+    return jsonify({"name": name} | form_data)
+    #return send_from_directory('static', CONFIGURATION_PAGE)
+
+@app.get("/sensordata")
+def sensor_data():
+    return events_generator(), {"Content-Type": "text/event-stream"}
+
+def events_generator():
+    q = Queue(10)
+    listeners.append(q)
+    while True:
+        yield str(q.get())
 
 if __name__ == "__main__":
+    from src.sample_event_generator import SampleEventSource
+    SampleEventSource(listeners).start()
     app.run(debug=True)

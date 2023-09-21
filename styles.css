@@ -1,0 +1,145 @@
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Define custom colors */
+:root {
+  --main-red: #FF0000;
+  --main-white: #FFFFFF;
+  --main-black: #000000;
+}
+
+/* Base styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--main-white); /* Set text color to white */
+  background: url('symbol3.jpg') center top no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+/* Add a black background to the top 30% of the page */
+body:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  background-color: black;
+  z-index: -1; /* Place it behind the content */
+}
+
+/* Header styles */
+#homepage-logo {
+  position: relative;
+  padding: 5%;
+}
+
+#logo {
+  width: 200px;
+  height: 100px;
+}
+
+#logo3 {
+  position: absolute;
+  top: 12%;
+  right: 12%;
+  width: 300px;
+  height: 100px;
+}
+
+figcaption {
+  letter-spacing: 8px;
+  font-weight: bold;
+  font-style: italic;
+  font-family: 'bazooka',sans-serif;
+  word-spacing: 0.1em;
+  font-size: 55px;
+}
+
+.homepara {
+  letter-spacing: 1px;
+  font-size: 25px;
+}
+
+/* Navigation bar styles */
+.navbar {
+  overflow: hidden;
+  display: inline-block;
+}
+
+.navbar a {
+  float: right;
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 17px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s; /* Hover animation */
+}
+
+.navbar a:hover {
+  background-color: black;
+  color: black;
+}
+
+.navbar a.active {
+  background-color: var(--main-red);
+  color: var(--main-red);
+}
+
+/* Home page button styles */
+.homebtn {
+  padding: 15px 30px;
+  margin: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 3px solid white;
+  border-radius: 25px;
+  background: transparent;
+  cursor: pointer;
+  color: white;
+}
+
+/* About section styles */
+.row-about {
+  display: flex;
+  justify-content: center;
+  margin-top: 8%;
+}
+
+.column-about {
+  flex: 1;
+  margin: 0 1%;
+}
+
+/* Footer styles */
+#homepage-footer {
+  position: absolute;
+  bottom: 0;
+}
+
+footer {
+  font-weight: 300;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+  position: absolute;
+  bottom: 0;
+}
+
+footer p {
+  margin: 5px;
+}
+
+/* Additional styles can be added as needed */
