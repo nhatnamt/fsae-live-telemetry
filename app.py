@@ -53,7 +53,7 @@ def sensor_data():
     return events_generator(), {"Content-Type": "text/event-stream"}
 
 def events_generator():
-    q = Queue(10)
+    q = Queue(100)
     listeners.append(q)
     while True:
         yield str(q.get())

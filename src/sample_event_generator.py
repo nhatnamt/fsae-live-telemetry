@@ -8,6 +8,35 @@ if __name__ == "__main__":
 else:
     from src.event import Event
 
+SENSORS = {
+    "FL_temp" : {
+        "delay": 0.1,
+        "max" : 50,
+        "min": 20,
+        "last_sent": 0
+    },
+    "FL_torque": {},
+    "FL_rpm": {},
+    "FR_temp": {},
+    "FR_torque": {},
+    "FR_rpm": {},
+    "RL_temp": {},
+    "RL_torque": {},
+    "RL_rpm": {},
+    "RR_temp": {},
+    "RR_torque": {},
+    "RR_rpm": {},
+    "left_coolant_temp": {},
+    "right_coolant_temp": {},
+    "rear_coolant_temp": {},
+    "cell_max_voltage": {},
+    "cell_min_voltage": {},
+    "pack_voltage": {},
+    "pack_power": {},
+    "current_temp": {},
+    "lv_battery": {}
+}
+
 def random_event_generator():
     idList = ["FL_temp","FL_torque","FL_rpm",
                 "FR_temp","FR_torque","FR_rpm",
