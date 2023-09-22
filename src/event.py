@@ -23,5 +23,5 @@ class Event:
         return result + "\n\n"
 
 if __name__ == "__main__":
-    event = Event("test", 123)
+    event = Event("test", 1, 123)
     print(repr(str(event)))
