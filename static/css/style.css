@@ -1,15 +1,7 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
-}
-
-table {
-  margin: 0 auto;
-}
-
-body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 .topnav {
@@ -67,9 +59,24 @@ body {
 	float: right; 
 }
 
+/* Configuration page */
+form table {
+  text-align: left;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+form table tr:hover {
+  background-color: #ccc;
+}
+
 label, input, select {
   padding-top: 0.25em;
   padding-bottom: 0.25em;
+}
+
+select {
+  font-size: large;
 }
 
 input, select {
@@ -77,8 +84,4 @@ input, select {
   margin-right: 0.5em;
   padding-left: 0.5em;
   padding-right: 0.5em;
-}
-
-.hidden {
-  display: none;
 }

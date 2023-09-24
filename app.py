@@ -1,6 +1,6 @@
 from random import random
 from time import sleep
-from flask import Flask, send_from_directory, jsonify, request
+from flask import Flask, send_from_directory, jsonify, request, redirect, url_for
 from queue import Queue
 from src.sample_event_generator import SampleEventSource
 
@@ -14,8 +14,37 @@ listeners = []
 
 # TODO: load from file?
 configuration = {
-    "test configuration": {
-        "key": "value"
+    "accel_config": {
+        "front-shock-pressure-psi": "3",
+        "front-tyre-pressure-psi": "1",
+        "rear-shock-pressure-psi": "4",
+        "rear-tyre-pressure-psi": "2",
+        "torque-vectoring-front-to-rear-ratio": "5",
+        "torque-vectoring-understeering-coeff": "6"
+    },
+    "skidpad_config": {
+        "front-shock-pressure-psi": "13",
+        "front-tyre-pressure-psi": "11",
+        "rear-shock-pressure-psi": "14",
+        "rear-tyre-pressure-psi": "12",
+        "torque-vectoring-front-to-rear-ratio": "15",
+        "torque-vectoring-understeering-coeff": "16"
+    },
+    "autocross_config": {
+        "front-shock-pressure-psi": "1.3",
+        "front-tyre-pressure-psi": "1.1",
+        "rear-shock-pressure-psi": "1.4",
+        "rear-tyre-pressure-psi": "1.2",
+        "torque-vectoring-front-to-rear-ratio": "1.5",
+        "torque-vectoring-understeering-coeff": "1.6"
+    },
+    "endurance_config": {
+        "front-shock-pressure-psi": "-3",
+        "front-tyre-pressure-psi": "-1",
+        "rear-shock-pressure-psi": "-4",
+        "rear-tyre-pressure-psi": "-2",
+        "torque-vectoring-front-to-rear-ratio": "-5",
+        "torque-vectoring-understeering-coeff": "-6"
     }
 }
 
@@ -25,28 +54,19 @@ def home():
 
 @app.get("/configuration")
 def get_configuration():
-    #return jsonify(configuration)
-    return send_from_directory('static', CONFIGURATION_PAGE)
+    return jsonify(configuration)
 
 @app.post("/configuration")
 def post_configuration():
-    # TODO: change post request to JSON format?
-    keys = []
-    values = []
-    for k, v in request.form.items(multi=True):
-        if k == "key":
-            keys.append(v)
-        elif k == "value":
-            values.append(v)
-    form_data = {k: v for k, v in zip(keys, values)}
+    form_data = request.form.to_dict()
 
-    name = form_data["name"]
-    del form_data["name"]
+    name = form_data["configuration"]
+    del form_data["configuration"]
     configuration[name] = form_data
     # TODO: save to file
 
-    return jsonify({"name": name} | form_data)
-    #return send_from_directory('static', CONFIGURATION_PAGE)
+    #return jsonify({"_configuration": name} | form_data)
+    return redirect(url_for('static', filename=CONFIGURATION_PAGE, configuration=name))
 
 @app.get("/sensordata")
 def sensor_data():
