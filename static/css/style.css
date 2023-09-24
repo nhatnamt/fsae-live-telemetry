@@ -15,8 +15,6 @@ body {
 .topnav {
   overflow: auto;
   background-color: #333;
-
-  
 }
 
 .topnav a {
@@ -26,15 +24,14 @@ body {
   text-decoration: none;
   font-size: 15px;
   display: block; 
-  text-align: center; 
- transition: color 1s;
+  border-bottom: 2px solid transparent ;
+  transition: color 1s;
 }
 
 .topnav a:hover {
   border-bottom: 2px solid red ;
   color: #F40000; 
 }
-
 
 .topnav li {
 	display: inline-block;
@@ -49,15 +46,13 @@ body {
 	padding: 0; 
 	margin: 0; 
 	list-style: none; 
-	
 }
 
 .logo-image{
-position:absolute; 
-margin-top: -5px; 
-margin-left:-680px; 
-width: 130px; 
-
+  position:absolute; 
+  margin-top: -5px; 
+  margin-left:-680px; 
+  width: 130px; 
 }
 
 .trapezoid {
@@ -71,6 +66,7 @@ width: 130px;
 	width: 325px; 
 	float: right; 
 }
+
 label, input, select {
   padding-top: 0.25em;
   padding-bottom: 0.25em;
