@@ -21,7 +21,6 @@ document.getElementById("configuration").onchange = (ev) => {
 };
 
 document.getElementById("config-form").onreset = (ev) => {
-    console.log(ev);
     update_form();
     return false; // done with reset
 }

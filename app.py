@@ -1,13 +1,14 @@
-from random import random
-from time import sleep
 from flask import Flask, send_from_directory, jsonify, request, redirect, url_for
 from queue import Queue
 from src.sample_event_generator import SampleEventSource
+import json
 
 HOME_PAGE = 'home.html'
 CONFIGURATION_PAGE = 'configuration.html'
 SENSOR_PAGE = 'sensors.html'
 ABOUT_PAGE = 'about.html'
+
+CONFIGURATION_STORAGE = 'vehicle_configurations.json'
 
 app = Flask(__name__, static_url_path="/")
 listeners = []
@@ -48,6 +49,16 @@ configuration = {
     }
 }
 
+def save_configuration():
+    with open(CONFIGURATION_STORAGE, 'w') as f:
+        json.dump(configuration, f)
+
+try:
+    with open(CONFIGURATION_STORAGE) as f:
+        configuration = json.load(f)
+except FileNotFoundError as e:
+    save_configuration()
+
 @app.route('/')
 def home():
     return send_from_directory('static', HOME_PAGE)
@@ -63,7 +74,7 @@ def post_configuration():
     name = form_data["configuration"]
     del form_data["configuration"]
     configuration[name] = form_data
-    # TODO: save to file
+    save_configuration()
 
     #return jsonify({"_configuration": name} | form_data)
     return redirect(url_for('static', filename=CONFIGURATION_PAGE, configuration=name))
