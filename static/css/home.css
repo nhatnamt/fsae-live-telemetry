@@ -88,7 +88,7 @@ figcaption {
 }
 
 .navbar a:hover {
-  background-color: black;
+  background-color: white;
   color: black;
 }
 
@@ -104,11 +104,11 @@ figcaption {
   font-size: 16px;
   font-weight: 700;
   text-transform: uppercase;
-  border: 3px solid white;
+  border: 10px goldenrod;
   border-radius: 25px;
-  background: transparent;
+  background: white;
   cursor: pointer;
-  color: white;
+  color: black;
 }
 
 /* About section styles */
