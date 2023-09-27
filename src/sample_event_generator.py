@@ -64,6 +64,7 @@ class SampleEventSource:
                 try:
                     q.put_nowait(event)
                 except queue.Full:
+                    #print(f"Queue full! Unable to add: {event.event} {event.id}")
                     pass
 
     def start(self):
