@@ -61,6 +61,25 @@ body {
   float: right; 
 }
 
+/* Sensor page */
+div.flex {
+  display: flex;
+}
+
+.column {
+  flex: 25%;
+  display: flex;
+  flex-direction: column;
+}
+
+.column .row {
+  flex: 50%;
+}
+
+object { /* Limit svg size */
+  max-height: 1080px;
+}
+
 /* Configuration page */
 form table {
   text-align: left;
