@@ -1,6 +1,6 @@
 from threading import Thread
-from random import random,randint
-from time import sleep
+from random import random,randint,uniform
+import time
 import queue
 
 if __name__ == "__main__":
@@ -10,45 +10,147 @@ else:
 
 SENSORS = {
     "FL_temp" : {
-        "delay": 0.1,
-        "max" : 50,
-        "min": 20,
+        "refresh_rate": 1,
+        "max" : 120,
+        "min": 10,
         "last_sent": 0
     },
-    "FL_torque": {},
-    "FL_rpm": {},
-    "FR_temp": {},
-    "FR_torque": {},
-    "FR_rpm": {},
-    "RL_temp": {},
-    "RL_torque": {},
-    "RL_rpm": {},
-    "RR_temp": {},
-    "RR_torque": {},
-    "RR_rpm": {},
-    "left_coolant_temp": {},
-    "right_coolant_temp": {},
-    "rear_coolant_temp": {},
-    "cell_max_voltage": {},
-    "cell_min_voltage": {},
-    "pack_voltage": {},
-    "pack_power": {},
-    "current_temp": {},
-    "lv_battery": {}
+    "FL_torque": {
+        "refresh_rate": 0.1,
+        "max" : 21,
+        "min": -10,
+        "last_sent": 0
+    },
+    "FL_rpm": {
+        "refresh_rate": 0.1,
+        "max" : 20000,
+        "min": 0,
+        "last_sent": 0
+    },
+    "FR_temp" : {
+        "refresh_rate": 1,
+        "max" : 120,
+        "min": 10,
+        "last_sent": 0
+    },
+    "FR_torque": {
+        "refresh_rate": 0.1,
+        "max" : 21,
+        "min": -10,
+        "last_sent": 0
+    },
+    "FR_rpm": {
+        "refresh_rate": 0.1,
+        "max" : 20000,
+        "min": 0,
+        "last_sent": 0
+    },
+    "RL_temp" : {
+        "refresh_rate": 1,
+        "max" : 120,
+        "min": 10,
+        "last_sent": 0
+    },
+    "RL_torque": {
+        "refresh_rate": 0.1,
+        "max" : 21,
+        "min": -10,
+        "last_sent": 0
+    },
+    "RL_rpm": {
+        "refresh_rate": 0.1,
+        "max" : 20000,
+        "min": 0,
+        "last_sent": 0
+    },
+    "RR_temp" : {
+        "refresh_rate": 1,
+        "max" : 120,
+        "min": 10,
+        "last_sent": 0
+    },
+    "RR_torque": {
+        "refresh_rate": 0.1,
+        "max" : 21,
+        "min": -10,
+        "last_sent": 0
+    },
+    "RR_rpm": {
+        "refresh_rate": 0.1,
+        "max" : 20000,
+        "min": 0,
+        "last_sent": 0
+    },
+    "left_coolant_temp" : {
+        "refresh_rate": 1,
+        "max" : 50,
+        "min": 5,
+        "last_sent": 0
+    },
+    "right_coolant_temp" : {
+        "refresh_rate": 1,
+        "max" : 50,
+        "min": 5,
+        "last_sent": 0
+    },
+    "rear_coolant_temp" : {
+        "refresh_rate": 1,
+        "max" : 50,
+        "min": 5,
+        "last_sent": 0
+    },
+    "cell_max_voltage" : {
+        "refresh_rate": 1,
+        "max" : 4.2,
+        "min": 3.0,
+        "last_sent": 0
+    },
+    "cell_min_voltage" : {
+        "refresh_rate": 1,
+        "max" : 4.2,
+        "min": 3.0,
+        "last_sent": 0
+    },
+    "pack_voltage" : {
+        "refresh_rate": 1,
+        "max" : 600,
+        "min": 435,
+        "last_sent": 0
+    },
+    "pack_power" : {
+        "refresh_rate": 0.1,
+        "max" : 80,
+        "min": 0,
+        "last_sent": 0
+    },
+    "current_temp" : {
+        "refresh_rate": 1,
+        "max" : 120,
+        "min": 10,
+        "last_sent": 0
+    },
+    "lv_battery" : {
+        "refresh_rate": 1,
+        "max" : 28.0,
+        "min": 22.5,
+        "last_sent": 0
+    },
+
 }
 
 def random_event_generator():
-    idList = ["FL_temp","FL_torque","FL_rpm",
-                "FR_temp","FR_torque","FR_rpm",
-                "RL_temp","RL_torque","RL_rpm",
-                "RR_temp","RR_torque","RR_rpm",
-                "left_coolant_temp","right_coolant_temp","rear_coolant_temp",
-                "cell_max_voltage","cell_min_voltage","pack_voltage","pack_power","current_temp","lv_battery"]
     while True:
-        for id in idList:
-            event = Event("textData", id, randint(0,100))
-            yield event
-            sleep(0.01)
+        for sensor in SENSORS:
+            if time.time() - SENSORS[sensor]["last_sent"] > SENSORS[sensor]["refresh_rate"]:
+                SENSORS[sensor]["last_sent"] = time.time()
+                # switch between random and uniform
+                min = SENSORS[sensor]["min"]
+                max = SENSORS[sensor]["max"]
+                if isinstance(min, int) and isinstance(max, int):
+                    yield Event("textData",sensor, randint(min, max))
+                else:
+                    yield Event("textData",sensor, round(uniform(min, max),1))
+        time.sleep(0.1)
 
 class SampleEventSource:
     def __init__(self, listeners: list[queue.Queue] = None):
