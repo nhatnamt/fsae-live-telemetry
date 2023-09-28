@@ -1,30 +1,31 @@
+/* General Styles */
 body {
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   margin: 0;
-  background-color: #222;
-  color: #f2f2f2;
+  background-color: #222; /* Dark background */
+  color: #f2f2f2; /* Light text */
 }
 
 .topnav {
   overflow: auto;
-  background-color: #333;
+  background-color: #333; /* Dark background for navigation */
 }
 
 .topnav a {
-  color: #f2f2f2;
+  color: #f2f2f2; /* Light text for navigation links */
   text-align: center;
   padding: 30px 55px;
   text-decoration: none;
   font-size: 15px;
-  display: block; 
-  border-bottom: 2px solid transparent ;
-  transition: color 1s;
+  display: block;
+  border-bottom: 2px solid transparent;
+  transition: color 1s; /* Smooth color transition */
 }
 
 .topnav a:hover {
-  border-bottom: 2px solid red ;
-  color: #F40000; 
+  border-bottom: 2px solid red; /* Red border on hover */
+  color: #F40000; /* Red text on hover */
 }
 
 .topnav li {
@@ -32,36 +33,35 @@ body {
 }
 
 .topnav a.active {
-  background-color: #04AA6D;
-  color: white;
+  background-color: #04AA6D; /* Green background for active link */
+  color: white; /* White text for active link */
 }
 
 .topnav ul {
-  padding: 0; 
-  margin: 0; 
-  list-style: none; 
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
-.logo-image{
-  position:absolute; 
-  margin-top: -5px; 
-  margin-left:-680px; 
-  width: 130px; 
+.logo-image {
+  position: absolute;
+  margin-top: -5px;
+  margin-left: -680px;
+  width: 130px;
 }
 
 .trapezoid {
-  max-width: 100%; 
-  max-height: 100%; 
+  max-width: 100%;
+  max-height: 100%;
   border-bottom: 80px solid red;
   border-left: 70px solid transparent;
   border-right: 0px solid transparent;
-  height: 0; 
-  margin-top: -80px; 
-  width: 325px; 
-  float: right; 
+  height: 0;
+  margin-top: -80px;
+  width: 325px;
+  float: right;
 }
-
-/* Sensor page */
+/* Sensor Page Styles */
 div.flex {
   display: flex;
 }
@@ -76,18 +76,19 @@ div.flex {
   flex: 50%;
 }
 
-object { /* Limit svg size */
-  max-height: 1080px;
+object {
+  max-height: 1080px; /* Limit SVG size */
 }
-
-/* Configuration page */
+/* Configuration Page Styles */
 form table {
   text-align: left;
   margin: 0 auto;
   border-collapse: collapse;
 }
 
-label, input, select {
+label,
+input,
+select {
   padding-top: 0.25em;
   padding-bottom: 0.25em;
 }
@@ -96,22 +97,23 @@ select {
   font-size: large;
 }
 
-input, select {
+input,
+select {
   margin-left: 0.5em;
   margin-right: 0.5em;
   padding-left: 0.5em;
   padding-right: 0.5em;
-  background-color: #222;
-  color: #f2f2f2;
+  background-color: #222; /* Dark background */
+  color: #f2f2f2; /* Light text */
 }
 
 form {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #333;
+  background-color: #333; /* Dark background for form */
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Shadow effect */
 }
 
 form h1 {
@@ -130,8 +132,8 @@ form table tr {
 }
 
 form table th {
-  background-color: #333;
-  color: white;
+  background-color: #333; /* Dark background for table headers */
+  color: white; /* White text for table headers */
   padding: 10px;
   text-align: left;
 }
@@ -141,7 +143,7 @@ form table td {
 }
 
 form table tr:hover {
-  background-color: #444;
+  background-color: #444; /* Darker background on hover */
 }
 
 label {
@@ -163,8 +165,8 @@ select {
 
 input[type="submit"],
 input[type="reset"] {
-  background-color: #F40000; /* Red */
-  color: white;
+  background-color: #F40000; /* Red background for buttons */
+  color: white; /* White text for buttons */
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -175,5 +177,53 @@ input[type="reset"] {
 
 input[type="submit"]:hover,
 input[type="reset"]:hover {
-  background-color: #a00; /* Current color on hover */
+  background-color: #a00; /* Darker red on hover */
 }
+/* Dark Mode/Light Mode Switch Styles */
+.mode-switch {
+  display: flex;
+  align-items: right;
+  justify-content: right;
+  margin-top: 1px;
+  position: relative;
+}
+
+.mode-switch label {
+  margin-right: 1px;
+}
+
+.mode-switch input {
+  display: none;
+}
+
+.mode-switch .slider {
+  position: relative;
+  width: 60px;
+  height: 30px;
+  background-color: #f0eded; /* Light color for slider */
+  border-radius: 30px;
+  transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.mode-switch .slider:before {
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background-color: #333; /* Dark color for slider handle */
+  left: 2px;
+  top: 2px;
+  transition: transform 0.3s; /* Smooth transform transition */
+}
+
+.mode-switch input:checked + .slider {
+  background-color: #2196F3; /* Blue color for slider in dark mode */
+}
+
+.mode-switch input:checked + .slider:before {
+  transform: translateX(30px); /* Move handle to the right in dark mode */
+}
+
+
+
