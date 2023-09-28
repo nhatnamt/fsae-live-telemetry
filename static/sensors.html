@@ -20,72 +20,88 @@
     </div>
 
     <h1>Swinburne FSAE Telemetry</h1>
-    <dl>
-        <dt>One:</dt>
-        <dd id="one">No data received!</dd>
-        <dt>Two:</dt>
-        <dd id="two">No data received!</dd>
-    <h1>Swinburne FSAE Telemetry</h1>
-    <h2>List of all data needs to be displayed</h2>
-    <h3>Front Left Corner</h3>
-    <dl id="front-left">
-        <dt>Motor Temperature</dt>
-        <dd id="FL_temp">0C</dd>
-        <dt>Motor Torque</dt>
-        <dd id="FL_torque">0 Nm</dd>
-        <dt>Motor RPM</dt>
-        <dd id="FL_rpm">0 RPM</dd>
-    </dl>
-    <h3>Front Right Corner</h3>
-    <dl id="front-right">
-        <dt>Motor Temperature</dt>
-        <dd id="FR_temp">0C</dd>
-        <dt>Motor Torque</dt>
-        <dd id="FR_torque">0 Nm</dd>
-        <dt>Motor RPM</dt>
-        <dd id="FR_rpm">0 RPM</dd>
-    </dl>
-    <h3>Rear Left Corner</h3>
-    <dl id="rear-left">
-        <dt>Motor Temperature</dt>
-        <dd id="RL_temp">0C</dd>
-        <dt>Motor Torque</dt>
-        <dd id="RL_torque">0 Nm</dd>
-        <dt>Motor RPM</dt>
-        <dd id="RL_rpm">0 RPM</dd>
-    </dl>
-    <h3>Rear Right Corner</h3>
-    <dl id="rear-right">
-        <dt>Motor Temperature</dt>
-        <dd id="RR_temp">0C</dd>
-        <dt>Motor Torque</dt>
-        <dd id="RR_torque">0 Nm</dd>
-        <dt>Motor RPM</dt>
-        <dd id="RR_rpm">0 RPM</dd>
-    </dl>
-    <h3>Cooling</h3>
-    <dl>
-        <dt>Left Loop Temperature</dt>
-        <dd id="left_coolant_temp">0C</dd>
-        <dt>Right Loop Temperature</dt>
-        <dd id="right_coolant_temp">0C</dd>
-        <dt>Rear Loop Temperature</dt>
-        <dd id="rear_coolant_temp">0C</dd>
-    </dl>
-    <h3>Battery</h3>
-    <dl>
-        <dt>Cell max voltage</dt>
-        <dd id="cell_max_voltage">0V</dd>
-        <dt>Cell min voltage</dt>
-        <dd id="cell_min_voltage">0V</dd>
-        <dt>Pack voltage</dt>
-        <dd id="pack_voltage">0V</dd>
-        <dt>Pack power</dt>
-        <dd id="pack_power">0W</dd>
-        <dt>Current Temperature</dt>
-        <dd id="current_temp">0C</dd>
-        <dt>LV Battery</dt>
-        <dd id="lv_battery">0V</dd>
-    </dl>
+    <div class="flex">
+        <div class="column">
+            <div class="row">
+                <h3>Front Left Corner</h3>
+                <dl id="front-left">
+                    <dt>Motor Temperature</dt>
+                    <dd id="FL_temp">0C</dd>
+                    <dt>Motor Torque</dt>
+                    <dd id="FL_torque">0 Nm</dd>
+                    <dt>Motor RPM</dt>
+                    <dd id="FL_rpm">0 RPM</dd>
+                </dl>    
+            </div>
+            <div class="row">
+                <h3>Rear Left Corner</h3>
+                <dl id="rear-left">
+                    <dt>Motor Temperature</dt>
+                    <dd id="RL_temp">0C</dd>
+                    <dt>Motor Torque</dt>
+                    <dd id="RL_torque">0 Nm</dd>
+                    <dt>Motor RPM</dt>
+                    <dd id="RL_rpm">0 RPM</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="column">
+            <object type="image/svg+xml" data="img/TS_23.svg">Your browser does not support SVG</object>
+        </div>
+        <div class="column">
+            <div class="row">
+                <h3>Front Right Corner</h3>
+                <dl id="front-right">
+                    <dt>Motor Temperature</dt>
+                    <dd id="FR_temp">0C</dd>
+                    <dt>Motor Torque</dt>
+                    <dd id="FR_torque">0 Nm</dd>
+                    <dt>Motor RPM</dt>
+                    <dd id="FR_rpm">0 RPM</dd>
+                </dl>
+            </div>
+            <div class="row">
+                <h3>Rear Right Corner</h3>
+                <dl id="rear-right">
+                    <dt>Motor Temperature</dt>
+                    <dd id="RR_temp">0C</dd>
+                    <dt>Motor Torque</dt>
+                    <dd id="RR_torque">0 Nm</dd>
+                    <dt>Motor RPM</dt>
+                    <dd id="RR_rpm">0 RPM</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="column">
+            <div class="row">
+                <h3>Cooling</h3>
+                <dl>
+                    <dt>Left Loop Temperature</dt>
+                    <dd id="left_coolant_temp">0C</dd>
+                    <dt>Right Loop Temperature</dt>
+                    <dd id="right_coolant_temp">0C</dd>
+                    <dt>Rear Loop Temperature</dt>
+                    <dd id="rear_coolant_temp">0C</dd>
+                </dl>
+            </div>
+            <div class="row">
+                <h3>Battery</h3>
+                <dl>
+                    <dt>Cell max voltage</dt>
+                    <dd id="cell_max_voltage">0V</dd>
+                    <dt>Cell min voltage</dt>
+                    <dd id="cell_min_voltage">0V</dd>
+                    <dt>Pack voltage</dt>
+                    <dd id="pack_voltage">0V</dd>
+                    <dt>Pack power</dt>
+                    <dd id="pack_power">0W</dd>
+                    <dt>Current Temperature</dt>
+                    <dd id="current_temp">0C</dd>
+                    <dt>LV Battery</dt>
+                    <dd id="lv_battery">0V</dd>
+                </dl>
+            </div>
+        </div>
+    </div.row>
 </body>
 </html>

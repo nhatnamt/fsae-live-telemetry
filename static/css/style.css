@@ -2,7 +2,8 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   margin: 0;
-  background-color: #f5f5f5;
+  background-color: #222;
+  color: #f2f2f2;
 }
 
 .topnav {
@@ -27,18 +28,18 @@ body {
 }
 
 .topnav li {
-	display: inline-block;
+  display: inline-block;
 }
-    
+
 .topnav a.active {
   background-color: #04AA6D;
   color: white;
 }
 
 .topnav ul {
-	padding: 0; 
-	margin: 0; 
-	list-style: none; 
+  padding: 0; 
+  margin: 0; 
+  list-style: none; 
 }
 
 .logo-image{
@@ -49,15 +50,34 @@ body {
 }
 
 .trapezoid {
-	max-width: 100%; 
-	max-height: 100%; 
-	border-bottom: 80px solid red;
-	border-left: 70px solid transparent;
-	border-right: 0px solid transparent;
-	height: 0; 
-	margin-top: -80px; 
-	width: 325px; 
-	float: right; 
+  max-width: 100%; 
+  max-height: 100%; 
+  border-bottom: 80px solid red;
+  border-left: 70px solid transparent;
+  border-right: 0px solid transparent;
+  height: 0; 
+  margin-top: -80px; 
+  width: 325px; 
+  float: right; 
+}
+
+/* Sensor page */
+div.flex {
+  display: flex;
+}
+
+.column {
+  flex: 25%;
+  display: flex;
+  flex-direction: column;
+}
+
+.column .row {
+  flex: 50%;
+}
+
+object { /* Limit svg size */
+  max-height: 1080px;
 }
 
 /* Configuration page */
@@ -65,10 +85,6 @@ form table {
   text-align: left;
   margin: 0 auto;
   border-collapse: collapse;
-}
-
-form table tr:hover {
-  background-color: #ccc;
 }
 
 label, input, select {
@@ -85,13 +101,15 @@ input, select {
   margin-right: 0.5em;
   padding-left: 0.5em;
   padding-right: 0.5em;
+  background-color: #222;
+  color: #f2f2f2;
 }
 
 form {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #333;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
@@ -123,7 +141,7 @@ form table td {
 }
 
 form table tr:hover {
-  background-color: #f0f0f0;
+  background-color: #444;
 }
 
 label {
@@ -157,5 +175,5 @@ input[type="reset"] {
 
 input[type="submit"]:hover,
 input[type="reset"]:hover {
-  background-color: #333; /* Current color on hover */
+  background-color: #a00; /* Current color on hover */
 }
