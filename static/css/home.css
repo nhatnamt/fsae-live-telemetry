@@ -18,14 +18,14 @@ body {
   font-size: 18px;
   font-weight: 400;
   line-height: 1.4;
-  color: var(--main-white); /* Set text color to white */
+  color: var(--main-white);
   background: url('../img/symbol3.jpg') center top no-repeat;
   background-size: cover;
   position: relative;
 }
 
-/* Add a black background to the top 30% of the page */
-body:before {
+/* Add a black background to the top 20% of the page */
+body::before {
   content: "";
   position: absolute;
   top: 0;
@@ -33,7 +33,7 @@ body:before {
   width: 100%;
   height: 20%;
   background-color: black;
-  z-index: -1; /* Place it behind the content */
+  z-index: -1;
 }
 
 /* Header styles */
@@ -59,7 +59,7 @@ figcaption {
   letter-spacing: 8px;
   font-weight: bold;
   font-style: italic;
-  font-family: 'bazooka',sans-serif;
+  font-family: 'bazooka', sans-serif;
   word-spacing: 0.1em;
   font-size: 55px;
 }
@@ -69,46 +69,34 @@ figcaption {
   font-size: 25px;
 }
 
-/* Navigation bar styles */
-.navbar {
-  overflow: hidden;
-  display: inline-block;
-}
-
-.navbar a {
-  float: right;
-  text-align: center;
-  padding: 10px 20px;
-  font-size: 17px;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: white;
-  text-decoration: none;
-  transition: background-color 0.3s, color 0.3s; /* Hover animation */
-}
-
-.navbar a:hover {
-  background-color: white;
-  color: black;
-}
-
-.navbar a.active {
-  background-color: var(--main-red);
-  color: var(--main-red);
-}
-
-/* Home page button styles */
 .homebtn {
   padding: 15px 30px;
   margin: 10px;
   font-size: 16px;
   font-weight: 700;
   text-transform: uppercase;
-  border: 10px goldenrod;
+  border: 3px solid goldenrod;
   border-radius: 25px;
-  background: white;
-  cursor: pointer;
+  background: black;
+  color: white;
+  transition: all 0.3s ease; 
+  display: inline-block; 
+  position: relative; 
+}
+
+.homebtn:hover {
+  background-color: white;
   color: black;
+  transform: scale(1.1); 
+}
+
+
+.homebtn:hover::after {
+  content: ""; 
+  position: absolute; 
+  top: 50%;  
+  left: 50%; 
+  transform: translate(-50%, -50%); 
 }
 
 /* About section styles */
@@ -142,4 +130,4 @@ footer p {
   margin: 5px;
 }
 
-/* Additional styles can be added as needed */
+
