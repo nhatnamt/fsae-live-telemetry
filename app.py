@@ -1,6 +1,5 @@
 from flask import Flask, send_from_directory, jsonify, request, redirect, url_for
 from queue import Queue
-from weakref import WeakSet
 import json
 from src.event_source import EventSource
 
@@ -12,7 +11,7 @@ ABOUT_PAGE = 'about.html'
 CONFIGURATION_STORAGE = 'vehicle_configurations.json'
 
 app = Flask(__name__, static_url_path="/")
-listeners = WeakSet()
+event_source = EventSource()
 
 # TODO: load from file?
 configuration = {
@@ -86,11 +85,11 @@ def sensor_data():
 
 def events_generator():
     q = Queue(100)
-    listeners.add(q)
-    print(f"Listeners: {len(listeners)}")
+    event_source.listeners.add(q)
+    print(f"Listeners: {len(event_source.listeners)}")
     while True:
         yield str(q.get())
 
 if __name__ == "__main__":
-    EventSource(listeners).start()
+    event_source.start()
     app.run(debug=True)

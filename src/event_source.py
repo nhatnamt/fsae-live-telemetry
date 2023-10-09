@@ -1,5 +1,6 @@
 from threading import Thread
 import queue
+from weakref import WeakSet
 
 if __package__ == "src":
     from src.random_event_generator import random_event_generator
@@ -7,18 +8,17 @@ else:
     from random_event_generator import random_event_generator
 
 class EventSource:
-    def __init__(self, listeners: list[queue.Queue] = None, generator = random_event_generator):
-        if listeners is None:
-            self.listeners = []
-        else:
-            self.listeners = listeners
+    def __init__(self, generator = random_event_generator):
+        self.listeners = WeakSet()
         self.generator = generator
         self._daemon = None
+        self.events = 0
 
     def start(self):
         if self._daemon is None:
             def queue_random_events():
                 for event in self.generator():
+                    self.events += 1
                     for q in self.listeners:
                         try:
                             q.put_nowait(event)
@@ -30,9 +30,15 @@ class EventSource:
             self._daemon.start()
 
 if __name__ == "__main__":
+    from time import perf_counter, sleep
+
     q = queue.SimpleQueue()
-    EventSource([q]).start()
-    count = 5
+    count = 1000
+    source = EventSource()
+    source.listeners.add(q)
+    start = perf_counter()
+    source.start()
     while count:
-        print(q.get())
+        print(q.get().to_csv())
         count -= 1
+    print(source.events, perf_counter() - start, "seconds")
