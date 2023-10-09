@@ -13,18 +13,8 @@ class Event:
         self.payload = payload
         self.timestamp = timestamp
     
-    def to_csv(self, delim = ","):
-        args = [self.event, self.id, self.payload, self.timestamp]
-        return delim.join(str(arg) for arg in args)
-
-    @classmethod
-    def from_csv(cls, line: str, delim = ","):
-        args = line.split(delim)
-        return cls(*args)
-
-    @classmethod
-    def csv_header(cls, delim = ","):
-        return delim.join(cls.CSV_HEADINGS)
+    def args(self):
+        return (self.event, self.id, self.payload, self.timestamp)
 
     def __str__(self):
         # result is in server-sent event format

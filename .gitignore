@@ -161,3 +161,6 @@ cython_debug/
 
 # Vehicle configuration storage files
 vehicle_configurations.json
+
+# CSV files
+static/data/

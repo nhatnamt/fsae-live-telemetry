@@ -92,4 +92,4 @@ def events_generator():
 
 if __name__ == "__main__":
     event_source.start()
-    app.run(debug=True)
+    app.run(debug=True, use_debugger=False, use_reloader=False)
