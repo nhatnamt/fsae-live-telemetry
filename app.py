@@ -2,7 +2,7 @@ from flask import Flask, send_from_directory, jsonify, request, redirect, url_fo
 from queue import Queue
 from weakref import WeakSet
 import json
-from src.sample_event_generator import SampleEventSource
+from src.event_source import EventSource
 
 HOME_PAGE = 'home.html'
 CONFIGURATION_PAGE = 'configuration.html'
@@ -92,5 +92,5 @@ def events_generator():
         yield str(q.get())
 
 if __name__ == "__main__":
-    SampleEventSource(listeners).start()
+    EventSource(listeners).start()
     app.run(debug=True)

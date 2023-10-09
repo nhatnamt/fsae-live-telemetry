@@ -1,12 +1,10 @@
-from threading import Thread
-from random import random,randint,uniform
+from random import randint, uniform
 import time
-import queue
 
-if __name__ == "__main__":
-    from event import Event
-else:
+if __package__ == "src":
     from src.event import Event
+else:
+    from event import Event
 
 SENSORS = {
     "FL_temp" : {
@@ -152,32 +150,10 @@ def random_event_generator():
                     yield Event("textData",sensor, round(uniform(min, max),1))
         time.sleep(0.1)
 
-class SampleEventSource:
-    def __init__(self, listeners: list[queue.Queue] = None):
-        if listeners is None:
-            self._listeners = []
-        else:
-            self._listeners = listeners
-        self._daemon = None
-
-    def queue_random_events(self):
-        for event in random_event_generator():
-            for q in self._listeners:
-                try:
-                    q.put_nowait(event)
-                except queue.Full:
-                    #print(f"Queue full! Unable to add: {event.event} {event.id}")
-                    pass
-
-    def start(self):
-        if self._daemon is None:
-            self._daemon = Thread(target=self.queue_random_events, daemon=True)
-            self._daemon.start()
-
 if __name__ == "__main__":
-    q = queue.SimpleQueue()
-    SampleEventSource([q]).start()
     count = 5
-    while count:
-        print(q.get())
+    for event in random_event_generator():
+        print(event)
+        if count == 0:
+            break
         count -= 1
