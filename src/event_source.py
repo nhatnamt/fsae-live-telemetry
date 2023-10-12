@@ -5,19 +5,19 @@ import os
 import csv
 
 if __package__ == "src":
-    from src.random_event_generator import random_event_generator
+    from src.random_event_generator import RandomEventGenerator
     from src.event import Event
 else:
-    from random_event_generator import random_event_generator
+    from random_event_generator import RandomEventGenerator
     from event import Event
 
-class EventSource:
-    CURRENT_FILE = "static/data/current.csv"
-    RENAME_FILE = "static/data/previous.csv"
+CURRENT_FILE = "static/data/current.csv"
+RENAME_FILE = "static/data/previous.csv"
 
-    def __init__(self, generator = random_event_generator):
+class EventSource:
+    def __init__(self, generator = None):
         self.listeners = WeakSet()
-        self.generator = generator
+        self.generator = generator if generator else RandomEventGenerator()
         self._daemon = None
         self._file = None
         self._csv = None
@@ -26,14 +26,14 @@ class EventSource:
     def start(self):
         if self._daemon is None:
             print("replacing")
-            if os.path.exists(self.CURRENT_FILE):
-                os.replace(self.CURRENT_FILE, self.RENAME_FILE)
-            self._file = open(self.CURRENT_FILE, "w", newline="")
-            self._csv = csv.writer(self._file)
+            if os.path.exists(CURRENT_FILE):
+                os.replace(CURRENT_FILE, RENAME_FILE)
+            self._file = open(CURRENT_FILE, "w", newline="")
+            self._csv = csv.writer(self._file) # default delimiters
             self._csv.writerow(Event.CSV_HEADINGS)
 
             def queue_random_events():
-                for event in self.generator():
+                for event in self.generator.generate_events():
                     self.events += 1
                     for q in self.listeners:
                         try:
@@ -45,6 +45,13 @@ class EventSource:
 
             self._daemon = Thread(target=queue_random_events, daemon=True)
             self._daemon.start()
+
+    def stop(self):
+        self.generator.stop()
+        self._daemon.join() # wait for daemon to stop
+        self._daemon = None
+        self._csv = None
+        self._file.close()
 
 if __name__ == "__main__":
     from time import perf_counter, sleep
@@ -58,4 +65,6 @@ if __name__ == "__main__":
     while count:
         print(q.get().args())
         count -= 1
+    print(source.events, perf_counter() - start, "seconds")
+    source.stop()
     print(source.events, perf_counter() - start, "seconds")

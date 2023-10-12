@@ -3,8 +3,10 @@ import time
 
 if __package__ == "src":
     from src.event import Event
+    from src.base_event_generator import BaseEventGenerator
 else:
     from event import Event
+    from base_event_generator import BaseEventGenerator
 
 SENSORS = {
     "FL_temp" : {
@@ -136,24 +138,28 @@ SENSORS = {
 
 }
 
-def random_event_generator():
-    while True:
-        for sensor in SENSORS:
-            if time.time() - SENSORS[sensor]["last_sent"] > SENSORS[sensor]["refresh_rate"]:
-                SENSORS[sensor]["last_sent"] = time.time()
-                # switch between random and uniform
-                min = SENSORS[sensor]["min"]
-                max = SENSORS[sensor]["max"]
-                if isinstance(min, int) and isinstance(max, int):
-                    yield Event("textData",sensor, randint(min, max))
-                else:
-                    yield Event("textData",sensor, round(uniform(min, max),1))
-        time.sleep(0.1)
-
+class RandomEventGenerator(BaseEventGenerator):
+    def generate_events(self):
+        super().generate_events()
+        while self._continue:
+            for sensor in SENSORS:
+                if time.time() - SENSORS[sensor]["last_sent"] > SENSORS[sensor]["refresh_rate"]:
+                    SENSORS[sensor]["last_sent"] = time.time()
+                    # switch between random and uniform
+                    min = SENSORS[sensor]["min"]
+                    max = SENSORS[sensor]["max"]
+                    if isinstance(min, int) and isinstance(max, int):
+                        yield Event("textData",sensor, randint(min, max))
+                    else:
+                        yield Event("textData",sensor, round(uniform(min, max),1))
+            time.sleep(0.1)
+    
 if __name__ == "__main__":
     count = 5
-    for event in random_event_generator():
+    generator = RandomEventGenerator()
+    for event in generator.generate_events():
         print(event)
         if count == 0:
-            break
-        count -= 1
+            generator.stop()
+        else:
+            count -= 1
