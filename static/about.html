@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Swinburne FSAE Telemetry</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/sensors.js" defer></script>
 </head>
 <body>
     <div class="topnav">
@@ -19,12 +18,16 @@
 			<div class="trapezoid"></div>
     </div>
     
-<h1>Swinburne FSAE Telemetry</h1>
-    <dl>
-        <dt>One:</dt>
-        <dd id="one">No data received!</dd>
-        <dt>Two:</dt>
-        <dd id="two">No data received!</dd>
-    </dl>
+    <h1>Swinburne FSAE Telemetry</h1>
+    <form action="/sensordata" method="post" enctype="multipart/form-data">
+        <label>
+            Upload recording:
+            <input type="file" name="file" accept="text/csv">
+        </label>
+        <input type="submit" value="Submit">
+    </form>
+    <h2>Download race data</h2>
+    <a href="data/current.csv">Current</a>
+    <a href="data/previous.csv">Previous</a>
 </body>
 </html>

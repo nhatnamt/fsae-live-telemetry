@@ -2,6 +2,7 @@ from flask import Flask, send_from_directory, jsonify, request, redirect, url_fo
 from queue import Queue
 import json
 from src.event_source import EventSource
+from src.playback_event_generator import PlaybackEventGenerator
 
 HOME_PAGE = 'home.html'
 CONFIGURATION_PAGE = 'configuration.html'
@@ -89,6 +90,17 @@ def events_generator():
     print(f"Listeners: {len(event_source.listeners)}")
     while True:
         yield str(q.get())
+
+@app.post("/sensordata")
+def playback_sensor_data():
+    file = request.files["file"]
+    generator = PlaybackEventGenerator()
+    file.save(generator.filename)
+
+    event_source.stop()
+    event_source.generator = generator
+    event_source.start()
+    return redirect(url_for('static', filename=SENSOR_PAGE))
 
 if __name__ == "__main__":
     event_source.start()
