@@ -11,8 +11,9 @@ else:
     from random_event_generator import RandomEventGenerator
     from event import Event
 
+DATA_FOLDER  = "static/data"
 CURRENT_FILE = "static/data/current.csv"
-RENAME_FILE = "static/data/previous.csv"
+RENAME_FILE  = "static/data/previous.csv"
 
 class EventSource:
     def __init__(self, generator = None):
@@ -26,7 +27,9 @@ class EventSource:
     def start(self):
         if self._daemon is None:
             #print("replacing")
-            if os.path.exists(CURRENT_FILE):
+            if not os.path.exists(DATA_FOLDER):
+                os.mkdir(DATA_FOLDER)
+            elif os.path.exists(CURRENT_FILE):
                 os.replace(CURRENT_FILE, RENAME_FILE)
             self._file = open(CURRENT_FILE, "w", newline="")
             self._csv = csv.writer(self._file) # default delimiters
@@ -67,6 +70,8 @@ if __name__ == "__main__":
         count -= 1
     print(source.events, perf_counter() - start, "seconds")
     source.stop()
+    while not q.empty():
+        print(q.get().args())
     print(source.events, perf_counter() - start, "seconds")
 
     from playback_event_generator import PlaybackEventGenerator
