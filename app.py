@@ -3,6 +3,7 @@ from queue import Queue
 import json
 from src.event_source import EventSource
 from src.playback_event_generator import PlaybackEventGenerator
+import os
 
 HOME_PAGE = 'home.html'
 CONFIGURATION_PAGE = 'configuration.html'
@@ -10,6 +11,7 @@ SENSOR_PAGE = 'sensors.html'
 ABOUT_PAGE = 'about.html'
 
 CONFIGURATION_STORAGE = 'vehicle_configurations.json'
+DATA_FOLDER = "static/data"
 
 app = Flask(__name__, static_url_path="/")
 event_source = EventSource()
@@ -102,6 +104,15 @@ def playback_sensor_data():
     event_source.start()
     return redirect(url_for('static', filename=SENSOR_PAGE))
 
+@app.get("/data")
+def list_csv_files():
+    files = []
+    for f in os.listdir(DATA_FOLDER):
+        if f.lower().endswith(".csv"):
+            files.append(f)
+    return jsonify(files)
+
+event_source.start()
+
 if __name__ == "__main__":
-    event_source.start()
     app.run(debug=True, use_debugger=False, use_reloader=False)
