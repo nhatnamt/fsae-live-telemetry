@@ -4,6 +4,7 @@ import json
 from src.event_source import EventSource
 from src.playback_event_generator import PlaybackEventGenerator
 import os
+import urllib.request
 
 HOME_PAGE = 'home.html'
 CONFIGURATION_PAGE = 'configuration.html'
@@ -11,6 +12,21 @@ SENSOR_PAGE = 'sensors.html'
 ABOUT_PAGE = 'about.html'
 
 CONFIGURATION_STORAGE = 'vehicle_configurations.json'
+
+# download JS dependencies
+JS_LIB_FOLDER = "static/js/lib"
+JS_DEPENDENCIES = {
+    "d3.min.js": "https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"
+}
+
+if not os.path.exists(JS_LIB_FOLDER):
+    os.mkdir(JS_LIB_FOLDER)
+for filename, url in JS_DEPENDENCIES.items():
+    filename = f"{JS_LIB_FOLDER}/{filename}"
+    if not os.path.exists(filename):
+        with urllib.request.urlopen(url) as content:
+            with open(filename, "wb") as f:
+                f.write(content.read())        
 
 app = Flask(__name__, static_url_path="/")
 event_source = EventSource()
