@@ -11,7 +11,6 @@ SENSOR_PAGE = 'sensors.html'
 ABOUT_PAGE = 'about.html'
 
 CONFIGURATION_STORAGE = 'vehicle_configurations.json'
-DATA_FOLDER = "static/data"
 
 app = Flask(__name__, static_url_path="/")
 event_source = EventSource()
@@ -107,9 +106,10 @@ def playback_sensor_data():
 @app.get("/data")
 def list_csv_files():
     files = []
-    for f in os.listdir(DATA_FOLDER):
+    for f in os.listdir(EventSource.DATA_FOLDER):
         if f.lower().endswith(".csv"):
             files.append(f)
+    files.reverse()
     return jsonify(files)
 
 event_source.start()

@@ -3,6 +3,7 @@ import queue
 from weakref import WeakSet
 import os
 import csv
+import time
 
 if __package__ == "src":
     from src.random_event_generator import RandomEventGenerator
@@ -11,11 +12,11 @@ else:
     from random_event_generator import RandomEventGenerator
     from event import Event
 
-DATA_FOLDER  = "static/data"
-CURRENT_FILE = "static/data/current.csv"
-RENAME_FILE  = "static/data/previous.csv"
+NAME_PATTERN = "%Y%m%d-%H%M%S.csv"
 
 class EventSource:
+    DATA_FOLDER  = "static/data/"
+
     def __init__(self, generator = None):
         self.listeners: WeakSet[queue.Queue] = WeakSet()
         self.generator = generator if generator else RandomEventGenerator()
@@ -27,11 +28,10 @@ class EventSource:
     def start(self):
         if self._daemon is None:
             #print("replacing")
-            if not os.path.exists(DATA_FOLDER):
-                os.mkdir(DATA_FOLDER)
-            elif os.path.exists(CURRENT_FILE):
-                os.replace(CURRENT_FILE, RENAME_FILE)
-            self._file = open(CURRENT_FILE, "w", newline="")
+            if not os.path.exists(self.DATA_FOLDER):
+                os.mkdir(self.DATA_FOLDER)
+            filename = time.strftime(NAME_PATTERN)
+            self._file = open(self.DATA_FOLDER + filename, "w", newline="")
             self._csv = csv.writer(self._file) # default delimiters
             self._csv.writerow(Event.CSV_HEADINGS)
             self.events = 0
@@ -75,9 +75,8 @@ if __name__ == "__main__":
     print(source.events, perf_counter() - start, "seconds")
 
     from playback_event_generator import PlaybackEventGenerator
-    from shutil import copyfile
-    generator = PlaybackEventGenerator()
-    copyfile(CURRENT_FILE, generator.filename)
+    print(source._file.name)
+    generator = PlaybackEventGenerator(source._file.name)
     source.generator = generator
     count = source.events
     start = perf_counter()
