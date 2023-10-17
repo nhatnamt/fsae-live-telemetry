@@ -110,6 +110,25 @@ var testChart = {
         this.yAxis = svg.append("g")
             .attr("transform", `translate(${this.margin.left},0)`)
             .call(d3.axisLeft(scale));
+
+        // Create x-axis label
+        svg.append("text")
+            .attr("x", this.margin.left + (this.width - this.margin.left) / 2)
+            .attr("y", this.height)
+            .attr("text-anchor", "middle")
+            .attr("fill", "currentColor")
+            .attr("font-size", 12)
+            .text("Delay (seconds)");
+
+        // Create y-axis label
+        svg.append("text")
+            .attr("x", -this.margin.top - (this.height - this.margin.top) / 2)
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "middle")
+            .attr("dominant-baseline", "hanging")
+            .attr("fill", "currentColor")
+            .attr("font-size", 12)
+            .text("Frequency");
     },
 
     update() {
