@@ -1,3 +1,59 @@
+var testStats = {
+    results: [],
+    min: NaN,
+    max: NaN,
+
+    get count() {
+        return this.results.length;
+    },
+
+    get mean() {
+        return d3.mean(this.results);
+    },
+
+    get sd() {
+        return d3.deviation(this.results);
+    },
+
+    get median() {
+        return d3.median(this.results);
+    },
+
+    clear() {
+        this.results = [];
+        this.min = NaN;
+        this.max = NaN;
+        this.updateStats();
+    },
+
+    push(result) {
+        if (this.results.length === 0) {
+            this.min = result;
+            this.max = result;
+        } else {
+            if (result < this.min) {
+                this.min = result;
+            } else if (result > this.max) {
+                this.max = result;
+            }
+        }
+        this.results.push(result);
+        this.updateStats();
+    },
+
+    updateStats() {
+        ["count", "min", "max", "mean", "sd", "median"].forEach(function (prop) {
+            let value = testStats[prop];
+            if (isNaN(value)) {
+                value = "-";
+            } else {
+                value = Math.round(value);
+            }
+            document.getElementById(prop).innerHTML = value;
+        });
+    },
+};
+
 function Sensor(event, id, name, unit, min, max) {
     var obj = {
         event: event,
@@ -36,11 +92,11 @@ const SENSORS = {
     "lv_battery": Sensor("textData", "lv_battery", "LV Battery", "V", 22.5, 28.0),
 };
 
-var test_sensor = "";
+var testSensor = "";
 
 function updateValue(id, value) {
     let el = document.querySelector("#test-container .text-data");
-    if (test_sensor === "") {
+    if (testSensor === "") {
         let sensor = SENSORS[id];
         if (sensor === undefined) {
             el.querySelector("h4").innerHTML = id;
@@ -60,7 +116,7 @@ function updateValue(id, value) {
 
 // Use sensor data from web server
 const eventSource = new EventSource("sensordata");
-var test_next = true;
+var testNext = true;
 
 eventSource.onopen = function () {
     let el = document.getElementById("test-container");
@@ -75,16 +131,24 @@ var barAnimationTimeout;
 
 eventSource.addEventListener("textData", function (event) {
     let data = JSON.parse(event.data);
-    if (test_sensor === data.id || (test_next && test_sensor === "")) {
+    if (testSensor === data.id || (testNext && testSensor === "")) {
         updateValue(data.id, data.payload);
-        if (test_next) {
-            test_next = false;
+        if (testNext) {
+            testNext = false;
 
-            // TODO: get time from server to check latency
-            
+            fetch("timestamp").then(function (response) {
+                if (response.ok) {
+                    response.text().then(function (value) {
+                        testStats.push((value - data.timestamp) * 1000);
+                    });
+                }
+            });
+
+            // TODO: check latency
+
             // Wait at least 1 second before checking with server again
             setTimeout(function () {
-                test_next = true;
+                testNext = true;
             }, 1000);
             //console.log(event);
         }
@@ -103,9 +167,9 @@ eventSource.addEventListener("textData", function (event) {
 
 // Reset Latency Test when sensor is changed
 document.getElementById("test-select").onchange = function (event) {
-    test_sensor = event.target.value;
+    testSensor = event.target.value;
     let el = document.querySelector("#test-container .text-data");
-    let sensor = SENSORS[test_sensor];
+    let sensor = SENSORS[testSensor];
     if (sensor === undefined) {
         sensor = SENSORS[""];
     }
@@ -114,7 +178,7 @@ document.getElementById("test-select").onchange = function (event) {
     el.querySelector(".value").innerHTML = 0;
     el.querySelector("svg").setAttribute("viewBox", `${sensor.min} 0 ${sensor.max - sensor.min} 1`);
     el.querySelector("svg rect").dataset.value = 0;
-
+    testStats.clear();
 }
 
 /*

@@ -36,15 +36,53 @@
                     </select>
                 </label>
 
-                <div class="text-data">
-                    <h4>Sensor Name</h4>
-                    <p class="value">0</p>
-                    <p class="unit">Units</p>
-                    <svg height="12" width="100%" viewBox="0 0 100 1" preserveAspectRatio="none">
-                        <rect width="10" height="1" fill="red" />
-                        <line y2="1" stroke="#f2f2f2" /> <!-- zero reference -->
-                    </svg>
+                <div class="flex">
+                    <div class="column-2 text-data">
+                        <h4>Sensor Name</h4>
+                        <p class="value">0</p>
+                        <p class="unit">Units</p>
+                        <svg height="12" width="100%" viewBox="0 0 100 1" preserveAspectRatio="none">
+                            <rect width="10" height="1" fill="red" />
+                            <line y2="1" stroke="#f2f2f2" /> <!-- zero reference -->
+                        </svg>
+                    </div>
+                    <div class="column-4 text-data">
+                        <h4>Count</h4>
+                        <p id="count" class="value">0</p>
+                    </div>
+                    <div class="column-4 text-data">
+                        <h4>Maximum</h4>
+                        <p id="max" class="value">-</p>
+                        <p class="units">ms</p>
+                    </div>
                 </div>
+                <div class="flex">
+                    <div class="column-4 text-data">
+                        <h4>Mean</h4>
+                        <p id="mean" class="value">-</p>
+                        <p class="units">ms</p>
+                    </div>
+                    <div class="column-4 text-data">
+                        <h4>Std. Dev.</h4>
+                        <p id="sd" class="value">-</p>
+                        <p class="units">ms</p>
+                    </div>
+                    <div class="column-4 text-data">
+                        <h4>Median</h4>
+                        <p id="median" class="value">-</p>
+                        <p class="units">ms</p>
+                    </div>
+                    <div class="column-4 text-data">
+                        <h4>Minimum</h4>
+                        <p id="min" class="value">-</p>
+                        <p class="units">ms</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column-2 hidden">
+            <div class="row">
+                <svg id="test-histogram" width="100%" height="auto"></svg>
             </div>
         </div>
     </div>

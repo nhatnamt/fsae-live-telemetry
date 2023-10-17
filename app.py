@@ -5,6 +5,7 @@ from src.event_source import EventSource
 from src.playback_event_generator import PlaybackEventGenerator
 import os
 import urllib.request
+from time import perf_counter
 
 HOME_PAGE = 'home.html'
 CONFIGURATION_PAGE = 'configuration.html'
@@ -127,6 +128,10 @@ def list_csv_files():
             files.append(f)
     files.reverse()
     return jsonify(files)
+
+@app.get("/timestamp")
+def timestamp():
+    return str(perf_counter())
 
 event_source.start()
 

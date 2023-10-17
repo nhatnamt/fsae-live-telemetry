@@ -102,6 +102,10 @@ div.flex {
   border-top: solid 1px #888;
 }
 
+.text-data.column-4 {
+  grid-template-columns: 88px auto;
+}
+
 .text-data * {
   margin: 0;
 }
@@ -116,6 +120,10 @@ div.flex {
   text-align: right;
   grid-row: 2 / 4; /* span 2 rows */
   width: 120px;
+}
+
+.text-data.column-4 .value {
+  width: 80px;
 }
 
 object {
