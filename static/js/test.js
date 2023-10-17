@@ -25,6 +25,7 @@ var testStats = {
         this.min = NaN;
         this.max = NaN;
         this.updateStats();
+        testChart.setup();
     },
 
     push(result) {
@@ -40,6 +41,7 @@ var testStats = {
         }
         this.results.push(result);
         this.updateStats();
+        testChart.update();
     },
 
     updateStats() {
@@ -62,6 +64,73 @@ var testStats = {
             el.innerHTML = value;
             el.parentElement.querySelector(".units").innerHTML = units;
         });
+    },
+};
+
+var testChart = {
+    margin: {top: 10, right: 30, bottom: 30, left: 40},
+    width: 640,
+    height: 360,
+    svg: document.getElementById("test-histogram"),
+    xAxis: d3.select("#test-histogram"),
+    yAxis: d3.select("#test-histogram"),
+
+    get bins() {
+        return d3.bin()(testStats.results);
+    },
+
+    get bars() {
+        return d3.select(this.svg).selectAll("rect");
+    },
+
+    get x() { // horizontal scale
+        return d3.scaleLinear()
+            .domain([0, this.bins[this.bins.length - 1].x1])
+            .range([this.margin.left, this.width - this.margin.right]);
+    },
+
+    get y() { // vertical scale
+        return d3.scaleLinear()
+            .domain([0, d3.max(this.bins, (d) => d.length)])
+            .range([this.height - this.margin.bottom, this.margin.top]);
+    },
+
+    setup() {
+        this.svg.innerHTML = "";
+        let svg = d3.select(this.svg);
+
+        // Create x-axis
+        let scale = d3.scaleLinear().range([this.margin.left, this.width - this.margin.right]);
+        this.xAxis = svg.append("g")
+            .attr("transform", `translate(0,${this.height - this.margin.bottom})`)
+            .call(d3.axisBottom(scale));
+
+        // Create y-axis
+        scale = d3.scaleLinear().range([this.height - this.margin.bottom, this.margin.top]);
+        this.yAxis = svg.append("g")
+            .attr("transform", `translate(${this.margin.left},0)`)
+            .call(d3.axisLeft(scale));
+    },
+
+    update() {
+        // Update x-axis
+        this.xAxis.call(d3.axisBottom(this.x));
+
+        // Update y-axis
+        this.yAxis.call(d3.axisLeft(this.y));
+
+        // Update bars
+        let bars = this.bars.data(this.bins);
+        bars.enter()
+            .append("rect")
+            .merge(bars)
+                .attr("x", 1)
+                .attr("transform", d => `translate(${this.x(d.x0)},${this.y(d.length)})`)
+                .attr("width", d => this.x(d.x1) - this.x(d.x0) - 1)
+                .attr("height", d => this.height - this.margin.bottom - this.y(d.length))
+                .attr("fill", (_, i) => (i % 2) ? "maroon" : "red");
+        bars.exit()
+            .remove();
     },
 };
 
@@ -135,6 +204,7 @@ eventSource.onopen = function () {
         e.classList.remove("hidden");
     });
     el.querySelector("p").classList.add("hidden");
+    testChart.setup();
 };
 
 var sensors = new Set([""]);
