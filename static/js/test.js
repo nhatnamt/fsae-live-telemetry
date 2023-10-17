@@ -12,6 +12,7 @@ function Sensor(event, id, name, unit, min, max) {
 
 /** @type {Object.<string, {event: string, id: string, name: string, unit: string, min: number, max: number}}>} */
 const SENSORS = {
+    "": Sensor("", "", "Sensor Name", "Units", 0, 100),
     "FL_temp": Sensor("textData", "FL_temp", "Front Left Motor Temperature", "°C", 10, 120),
     "FR_temp": Sensor("textData", "FR_temp", "Front Right Motor Temperature", "°C", 10, 120),
     "RL_temp": Sensor("textData", "RL_temp", "Rear Left Motor Temperature", "°C", 10, 120),
@@ -39,16 +40,16 @@ var test_sensor = "";
 
 function updateValue(id, value) {
     let el = document.querySelector("#test-container .text-data");
-    let sensor = SENSORS[id];
     if (test_sensor === "") {
-        if (sensor) {
-            el.querySelector("h4").innerHTML = sensor.name;
-            el.querySelector(".unit").innerHTML = sensor.unit;
+        let sensor = SENSORS[id];
+        if (sensor === undefined) {
+            el.querySelector("h4").innerHTML = id;
+            el.querySelector(".unit").innerHTML = "Units";
             el.querySelector(".value").innerHTML = value;
             value = 100 * (value - sensor.min) / (sensor.max - sensor.min);
         } else {
-            el.querySelector("h4").innerHTML = id;
-            el.querySelector(".unit").innerHTML = "Units";
+            el.querySelector("h4").innerHTML = sensor.name;
+            el.querySelector(".unit").innerHTML = sensor.unit;
             el.querySelector(".value").innerHTML = value;
         }
     } else {
@@ -69,20 +70,52 @@ eventSource.onopen = function () {
     el.querySelector("p").classList.add("hidden");
 };
 
-eventSource.addEventListener("textData", function (event) {
-    if (test_next) {
-        let data = JSON.parse(event.data);
+var sensors = new Set([""]);
+var barAnimationTimeout;
 
-        if (test_sensor === "" || test_sensor === data.id) {
+eventSource.addEventListener("textData", function (event) {
+    let data = JSON.parse(event.data);
+    if (test_sensor === data.id || (test_next && test_sensor === "")) {
+        updateValue(data.id, data.payload);
+        if (test_next) {
             test_next = false;
+
+            // TODO: get time from server to check latency
+            
+            // Wait at least 1 second before checking with server again
             setTimeout(function () {
                 test_next = true;
-            }, 100);
+            }, 1000);
             //console.log(event);
-            updateValue(data.id, data.payload);
+        }
+    }
+
+    if (!sensors.has(data.id)) {
+        sensors.add(data.id);
+        let sensor = SENSORS[data.id];
+        if (sensor === undefined) {
+            document.getElementById("test-select").add(new Option(data.id, data.id));
+        } else {
+            document.getElementById("test-select").add(new Option(sensor.name, data.id));
         }
     }
 });
+
+// Reset Latency Test when sensor is changed
+document.getElementById("test-select").onchange = function (event) {
+    test_sensor = event.target.value;
+    let el = document.querySelector("#test-container .text-data");
+    let sensor = SENSORS[test_sensor];
+    if (sensor === undefined) {
+        sensor = SENSORS[""];
+    }
+    el.querySelector("h4").innerHTML = sensor.name;
+    el.querySelector(".unit").innerHTML = sensor.unit;
+    el.querySelector(".value").innerHTML = 0;
+    el.querySelector("svg").setAttribute("viewBox", `${sensor.min} 0 ${sensor.max - sensor.min} 1`);
+    el.querySelector("svg rect").dataset.value = 0;
+
+}
 
 /*
  * Bar animation
@@ -105,8 +138,6 @@ function barAnimationStep() {
         el.setAttribute("width", value);
         el.setAttribute("x", 0);
     }
-
-    setTimeout(window.requestAnimationFrame, 15, barAnimationStep);
 }
 
-window.requestAnimationFrame(barAnimationStep);
+setInterval(window.requestAnimationFrame, 15, barAnimationStep);

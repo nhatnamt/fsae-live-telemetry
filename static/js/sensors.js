@@ -85,8 +85,6 @@ function barAnimationStep() {
             el.setAttribute("x", 0);
         }
     });
-
-    setTimeout(window.requestAnimationFrame, 15, barAnimationStep);
 }
 
 //function fetchData() {
@@ -175,5 +173,4 @@ function barAnimationStep() {
   //etchData();
  // setInterval(fetchData, 5000);
   
-
-window.requestAnimationFrame(barAnimationStep);
+ setInterval(window.requestAnimationFrame, 15, barAnimationStep);
