@@ -2,6 +2,7 @@ var testStats = {
     results: [],
     min: NaN,
     max: NaN,
+    format: d3.format(".3s"),
 
     get count() {
         return this.results.length;
@@ -42,14 +43,24 @@ var testStats = {
     },
 
     updateStats() {
-        ["count", "min", "max", "mean", "sd", "median"].forEach(function (prop) {
+        document.getElementById("count").innerHTML = this.count;
+        ["min", "max", "mean", "sd", "median"].forEach(function (prop) {
             let value = testStats[prop];
+            let units = "s";
             if (isNaN(value)) {
                 value = "-";
             } else {
-                value = Math.round(value);
+                value = testStats.format(value);
+                let lastChar = value[value.length - 1];
+                while (lastChar < '0' || lastChar > '9') {
+                    units = lastChar + units;
+                    value = value.substring(0, value.length - 1);
+                    lastChar = value[value.length - 1];
+                }
             }
-            document.getElementById(prop).innerHTML = value;
+            let el = document.getElementById(prop);
+            el.innerHTML = value;
+            el.parentElement.querySelector(".units").innerHTML = units;
         });
     },
 };
@@ -139,7 +150,7 @@ eventSource.addEventListener("textData", function (event) {
             fetch("timestamp").then(function (response) {
                 if (response.ok) {
                     response.text().then(function (value) {
-                        testStats.push((value - data.timestamp) * 1000);
+                        testStats.push(value - data.timestamp);
                     });
                 }
             });
