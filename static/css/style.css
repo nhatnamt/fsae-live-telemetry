@@ -67,11 +67,18 @@ div.flex {
   display: flex;
 }
 
-.column {
-  flex: 25%;
+.column-2, .column-4 {
   display: flex;
   flex-direction: column;
   margin: 1em;
+}
+
+.column-2 {
+  flex: 50%;
+}
+
+.column-4 {
+  flex: 25%;
 }
 
 .row {
@@ -229,7 +236,7 @@ input[type="reset"]:hover {
   margin-right: 1px;
 }
 
-.mode-switch input {
+.mode-switch input, .hidden {
   display: none;
 }
 

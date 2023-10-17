@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swinburne FSAE Telemetry</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/lib/d3.min.js" defer></script>
+    <script src="js/test.js" defer></script>
+</head>
+<body>
+    <div class="topnav">
+            <img class = "logo-image" src="img/symbol.png" >
+        <ul>
+          <li><a href="home.html">HOME</a></li>
+          <li><a href="configuration.html">CONFIGURATION</a></li>
+		  <li><a href="graphs.html">GRAPHS</a></li>
+          <li><a href="sensors.html">SENSORS</a></li>
+          <li><a href="about.html">TEAM</a></li>
+        </ul>
+			<div class="trapezoid"></div>
+    </div>
+    
+    <h1>Tests - Swinburne FSAE Telemetry</h1>
+
+    <h2>Latency Test</h2>
+
+    <div id="test-container" class="flex">
+        <p class="column-2">No data received from server!</p>
+        <div class="column-2 hidden">
+            <div class="row">
+                <label>
+                    Sensor to test:
+                    <select id="test-select">
+                        <option value="">All sensors</option>
+                    </select>
+                </label>
+
+                <div class="text-data">
+                    <h4>Sensor Name</h4>
+                    <p class="value">0</p>
+                    <p class="unit">Units</p>
+                    <svg height="12" width="100%" viewBox="0 0 100 1" preserveAspectRatio="none">
+                        <rect width="10" height="1" fill="red" />
+                        <line y2="1" stroke="#f2f2f2" /> <!-- zero reference -->
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

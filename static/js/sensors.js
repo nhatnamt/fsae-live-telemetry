@@ -10,7 +10,9 @@ fetch("data").then(function (response) {
                 select.add(new Option(f, f));
             });
 
-            select.value = csv_url;
+            if (csv_url) {
+                select.value = csv_url;
+            }
         });
     }
 });
