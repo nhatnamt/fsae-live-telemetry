@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/home.css">
     <script src="js/home.js" defer></script>
+    <script src="js/playback.js" defer></script>
+
 </head>
 <body>
     <div class="topnav">
@@ -22,6 +24,20 @@
 			<div class="trapezoid"></div>
     </div>
 
+	<div class="playback-container">
+		<div>
+			<select class="playback-speed-select">
+				<option value="0.5x">0.5x</option>
+				<option value="1x" selected>1x</option>
+				<option value="2x">2x</option>
+			</select>
+			<div id="play-pause" class="play"></div>
+			<div class="playback-progress">
+				<div class="playblack-pointer"></div>
+			</div>
+		</div>
+	</div>
+
     <h1>Tests - Swinburne FSAE Telemetry</h1>
 	<br>
 
@@ -36,11 +52,6 @@
 		<button>Play</button>
 		<button>Delete</button>
 	</div>
-
-	<div id="playblack-container">
-
-	</div>
-
 
 </body>
 </html>
