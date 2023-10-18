@@ -1,48 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swinburne FSAE Telemetry</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/lib/d3.min.js" defer></script>
+    <script src="js/test.js" defer></script>
+</head>
+<body>
+    <div class="topnav">
+            <img class = "logo-image" src="img/symbol.png" >
+        <ul>
+          <li><a href="home.html">HOME</a></li>
+          <li><a href="configuration.html">CONFIGURATION</a></li>
+		  <li><a href="graphs.html">GRAPHS</a></li>
+          <li><a href="sensors.html">SENSORS</a></li>
+          <li><a href="test.html">TEST</a></li>
+          <li><a href="about.html">TEAM</a></li>
+        </ul>
+			<div class="trapezoid"></div>
+    </div>
 
-	<head>
-		<title>Home Page</title>
-		<meta charset="utf-8">
-		<meta name="keywords" content="HTML, tags">
-		<meta name="author" content="Saksham">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-	    <link rel="stylesheet" href="css/home.css">
-	</head>
+    <h1>Tests - Swinburne FSAE Telemetry</h1>
 
-	<body>
-		<div id="homepage-logo" class="homepage-logo">
-			<div>
-				<figure>
-					<img id="logo" class="logo" src="img/symbol.jpg" width="200" height="100">
-										<figcaption>TEAM SWINBURNE</figcaption>
-				</figure>
-				<p class="homepara">Telemetry System</p>
-			</div>
+    <h2>Session record, playblack and raw data</h2>
 
-			<img id="logo3" src="img/symbol2.jpg" width="300" height="100">
-			<br>
-			<br>
-			<br>
-			<br>
-			<div class="row-about">
-				<a href="configuration.html" class="homebtn column-about">Vehicle Configuration</a>
-				<a href="sensors.html" class="homebtn column-about">Sensors</a>
-				<a href="test.html" class="homebtn column-about">Latency Test</a>
-				<a href="about.html" class="homebtn column-about">Team</a>
-			</div>
-		</div>
+	<button>Click Me</button>
+	<button>Click Me</button>
+    <div id="test-container" class="flex">
+        <p class="column-2">No data received from server!</p>
+        <div class="column-2 hidden">
+            <div class="row">
+                <select id="test-select">
+                    <option value="">All sensors</option>
+                </select>
 
-		<footer id = "homepage-footer">
-			<p>		
-				<a href="https://teamswinburne.org/" target="_blank">&copy; Created for Team Swinburne</a>
-			</p>
-			
-			<!--put a logo next to swinburne-->
+                <h3>Test results</h3>
 
-			<p>
-				<a href="about.html">@ Contact Us</a>
-			</p>
-		</footer>
-	</body>
+                <div class="flex">
+                    <div class="column-2 text-data">
+                        <h4>Sensor Name</h4>
+                        <p class="value">0</p>
+                        <p class="unit">Units</p>
+                        <svg height="12" width="100%" viewBox="0 0 100 1" preserveAspectRatio="none">
+                            <rect width="10" height="1" fill="red" />
+                            <line y2="1" stroke="#f2f2f2" /> <!-- zero reference -->
+                        </svg>
+                    </div>
+                    <div class="column-4 text-data">
+                        <h4>Count</h4>
+                        <p id="count" class="value">0</p>
+                    </div>
+                    <div class="column-4 text-data">
+                        <h4>Maximum</h4>
+                        <p id="max" class="value">-</p>
+                        <p class="units">ms</p>
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="column-4 text-data">
+                        <h4>Mean</h4>
+                        <p id="mean" class="value">-</p>
+                        <p class="units">ms</p>
+                    </div>
+                    <div class="column-4 text-data">
+                        <h4>Std. Dev.</h4>
+                        <p id="sd" class="value">-</p>
+                        <p class="units">ms</p>
+                    </div>
+                    <div class="column-4 text-data">
+                        <h4>Median</h4>
+                        <p id="median" class="value">-</p>
+                        <p class="units">ms</p>
+                    </div>
+                    <div class="column-4 text-data">
+                        <h4>Minimum</h4>
+                        <p id="min" class="value">-</p>
+                        <p class="units">ms</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column-2 hidden">
+            <div class="row">
+                <svg id="test-histogram" width="100%" height="100%" viewBox="0 0 640 360"></svg>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
