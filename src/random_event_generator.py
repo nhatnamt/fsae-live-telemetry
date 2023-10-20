@@ -154,25 +154,25 @@ SENSORS = {
         "last_sent": 0
     },
     "FL_suspension": {
-        "refresh_rate": 0.2,
+        "refresh_rate": 0.1,
         "max" : 100,
         "min": -50,
         "last_sent": 0
     },
     "FR_suspension": {
-        "refresh_rate": 0.2,
+        "refresh_rate": 0.1,
         "max" : 100,
         "min": -50,
         "last_sent": 0
     },
     "RL_suspension": {
-        "refresh_rate": 0.2,
+        "refresh_rate": 0.1,
         "max" : 100,
         "min": -50,
         "last_sent": 0
     },
     "RR_suspension": {
-        "refresh_rate": 0.2,
+        "refresh_rate": 0.1,
         "max" : 100,
         "min": -50,
         "last_sent": 0

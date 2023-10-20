@@ -283,15 +283,15 @@ let MAX_GRAPH_POINTS = 50;
 let ctr = 0;
 function updateCharts(xArray, yArray, sensorRead) {
     var today = new Date();
-    var time =
-      today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    // var time =
+    //   today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     if (xArray.length >= MAX_GRAPH_POINTS) {
       xArray.shift();
     }
     if (yArray.length >= MAX_GRAPH_POINTS) {
       yArray.shift();
     }
-    xArray.push((ctr++)*0.05);
+    xArray.push((ctr++)*0.1);
     yArray.push(sensorRead);
   
     var data_update = {
@@ -301,6 +301,13 @@ function updateCharts(xArray, yArray, sensorRead) {
 
     return data_update;
   }
+var steeringData;
+var throttleData;
+var brakeData;
+var FL_suspensionData;
+var FR_suspensionData;
+var RL_suspensionData;
+var RR_suspensionData;
 
 // Check if URL points to a CSV file
 var csv_data;
@@ -312,38 +319,26 @@ if (csv_url === null) {
     eventSource.addEventListener("textData", function (event) {
         let data = JSON.parse(event.data);
         if (data.id == 'steering_angle') {
-            dataUpdate = updateCharts(steeringXArray, steeringYArray, data.payload);
-            Plotly.update(steeringGraph, dataUpdate);
+            steeringData = updateCharts(steeringXArray, steeringYArray, data.payload);
         }
         if (data.id == 'throttle_pos') {
-            dataUpdate = updateCharts(throttleXArray, throttleYArray, data.payload);
-            Plotly.update(pedalGraph, dataUpdate, {}, [0]);
+            throttleData = updateCharts(throttleXArray, throttleYArray, data.payload);
         }
         if (data.id == 'brake_pos') {
-            dataUpdate = updateCharts(brakeXArray, brakeYArray, data.payload);
-            Plotly.update(pedalGraph, dataUpdate, {}, [1]);
+            brakeData = updateCharts(brakeXArray, brakeYArray, data.payload);
         }
         if (data.id == 'FL_suspension') {
-            dataUpdate = updateCharts(FL_suspensionXArray, FL_suspensionYArray, data.payload);
-            Plotly.update(suspensionGraph, dataUpdate, {}, [0]);
+            FL_suspensionData = updateCharts(FL_suspensionXArray, FL_suspensionYArray, data.payload);
         }
         if (data.id == 'FR_suspension') {
-            dataUpdate = updateCharts(FR_suspensionXArray, FR_suspensionYArray, data.payload);
-            Plotly.update(suspensionGraph, dataUpdate, {}, [1]);
+            FR_suspensionData = updateCharts(FR_suspensionXArray, FR_suspensionYArray, data.payload);
         }
         if (data.id == 'RL_suspension') {
-            dataUpdate = updateCharts(RL_suspensionXArray, RL_suspensionYArray, data.payload);
-            Plotly.update(suspensionGraph, dataUpdate, {}, [2]);
+            RL_suspensionData = updateCharts(RL_suspensionXArray, RL_suspensionYArray, data.payload);
         }
         if (data.id == 'RR_suspension') {
-            dataUpdate = updateCharts(RR_suspensionXArray, RR_suspensionYArray, data.payload);
-            Plotly.update(suspensionGraph, dataUpdate, {}, [3]);
+            RR_suspensionData = updateCharts(RR_suspensionXArray, RR_suspensionYArray, data.payload);
         }
-
-        // if (data.id == 'brake_pos') {
-        //     dataUpdate = updateCharts(brakeXArray, brakeYArray, data.payload);
-        //     Plotly.update(pedalGraph, dataUpdate, [1]);
-        // }
     });
 } else {
     // Use CSV file
@@ -366,3 +361,15 @@ if (csv_url === null) {
         });
     });
 }
+
+function updateAllGraphs() {
+    Plotly.update(steeringGraph, steeringData);
+    Plotly.update(pedalGraph, throttleData, {}, [0]);
+    Plotly.update(pedalGraph, brakeData, {}, [1]);
+    Plotly.update(suspensionGraph, FL_suspensionData, {}, [0]);
+    Plotly.update(suspensionGraph, FR_suspensionData, {}, [1]);
+    Plotly.update(suspensionGraph, RL_suspensionData, {}, [2]);
+    Plotly.update(suspensionGraph, RR_suspensionData, {}, [3]);
+}
+
+setInterval(updateAllGraphs, 100);
