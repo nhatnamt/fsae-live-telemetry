@@ -135,6 +135,12 @@ SENSORS = {
         "min": 22.5,
         "last_sent": 0
     },
+    "steering_angle": {
+        "refresh_rate": 0.05,
+        "max" : 90,
+        "min": -90,
+        "last_sent": 0
+    },
 
 }
 
@@ -152,6 +158,7 @@ class RandomEventGenerator(BaseEventGenerator):
                         yield Event("textData",sensor, randint(min, max))
                     else:
                         yield Event("textData",sensor, round(uniform(min, max),1))
+                    
             time.sleep(0.1)
     
 if __name__ == "__main__":

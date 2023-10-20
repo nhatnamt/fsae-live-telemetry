@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Swinburne FSAE Telemetry</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/graph.css">
+    <script src="js/lib/plotly.min.js" defer></script>
+    <script src="js/graphs.js" defer></script>
+
 </head>
 <body>
     <div class="topnav">
@@ -21,6 +25,13 @@
     </div>
     
     <h1>Swinburne FSAE Telemetry</h1>
+
+    <div class = "graph-container">
+        <div id="gforce-graph"></div>
+        <div id="suspension-graph"></div>
+        <div id="steering-graph"></div>
+        <div id="pedal-graph"></div>
+    </div>
 
 </body>
 </html>
