@@ -141,7 +141,18 @@ SENSORS = {
         "min": -90,
         "last_sent": 0
     },
-
+    "throttle_pos": {
+        "refresh_rate": 0.05,
+        "max" : 100,
+        "min": 0,
+        "last_sent": 0
+    },
+    "brake_pos": {
+        "refresh_rate": 0.05,
+        "max" : 100,
+        "min": 0,
+        "last_sent": 0
+    },
 }
 
 class RandomEventGenerator(BaseEventGenerator):

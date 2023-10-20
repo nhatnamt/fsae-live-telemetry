@@ -15,7 +15,7 @@ var gForceTrace = {
     x: [],
     y: [],
     type: 'scatter',
-    mode: 'lines',
+    mode: 'markers',
     line: {
         color: '#ff0000',
         width: 2
@@ -33,16 +33,36 @@ var steeringTrace = {
     x: [],
     y: [],
     name: "Steering angle",
-    mode: "lines+markers",
-    type: "line",
+    mode: "lines",
+    type: "scatter",
+    line: {
+        color: '#f0f0f0',
+        width: 2
+    }
 };
 
-var pedalTrace = {
+var throttleTrace = {
     x: [],
     y: [],
-    name: "Pedal position",
-    mode: "lines+markers",
+    name: "Throttle position",
+    mode: "lines",
     type: "line",
+    line: {
+        color: '#00ff00',
+        width: 2
+    }
+
+};
+var brakeTrace = {
+    x: [],
+    y: [],
+    name: "Brake position",
+    mode: "lines",
+    type: "line",
+    line: {
+        color: '#ff0000',
+        width: 2
+    }
 };
 
 /* -------------------------------------------------------------------------- */
@@ -138,7 +158,6 @@ var steeringLayout = {
       size: 14,
       color: "#fff",
     },
-    colorway: ["#00008B"],
     margin: margin,
 };
 
@@ -167,7 +186,6 @@ var pedalLayout = {
       size: 14,
       color: "#fff",
     },
-    colorway: ["#00008B"],
     margin: margin,
 };
 
@@ -194,7 +212,7 @@ Plotly.newPlot(
 
 Plotly.newPlot(
     pedalGraph,
-    [pedalTrace],
+    [throttleTrace, brakeTrace],
     pedalLayout,
     graphConfig
 );
@@ -205,10 +223,16 @@ Plotly.newPlot(
 let steeringXArray = [];
 let steeringYArray = [];
 
+let throttleXArray = [];
+let throttleYArray = [];
+
+let brakeXArray = [];
+let brakeYArray = [];
+
 // The maximum number of data points displayed on scatter/line graph
 let MAX_GRAPH_POINTS = 50;
 let ctr = 0;
-function updateCharts(lineChartDiv, xArray, yArray, sensorRead) {
+function updateCharts(xArray, yArray, sensorRead) {
     var today = new Date();
     var time =
       today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -218,15 +242,15 @@ function updateCharts(lineChartDiv, xArray, yArray, sensorRead) {
     if (yArray.length >= MAX_GRAPH_POINTS) {
       yArray.shift();
     }
-    xArray.push(ctr++);
+    xArray.push((ctr++)*0.05);
     yArray.push(sensorRead);
   
     var data_update = {
       x: [xArray],
       y: [yArray],
     };
-  
-    Plotly.update(lineChartDiv, data_update);
+
+    return data_update;
   }
 
 // Check if URL points to a CSV file
@@ -239,8 +263,23 @@ if (csv_url === null) {
     eventSource.addEventListener("textData", function (event) {
         let data = JSON.parse(event.data);
         if (data.id == 'steering_angle') {
-            updateCharts(steeringGraph, steeringXArray, steeringYArray, data.payload);
+            dataUpdate = updateCharts(steeringXArray, steeringYArray, data.payload);
+            Plotly.update(steeringGraph, dataUpdate);
         }
+        if (data.id == 'throttle_pos') {
+            dataUpdate = updateCharts(throttleXArray, throttleYArray, data.payload);
+            Plotly.update(pedalGraph, dataUpdate, {}, [0]);
+        }
+
+        if (data.id == 'brake_pos') {
+            dataUpdate = updateCharts(brakeXArray, brakeYArray, data.payload);
+            Plotly.update(pedalGraph, dataUpdate, {}, [1]);
+        }
+
+        // if (data.id == 'brake_pos') {
+        //     dataUpdate = updateCharts(brakeXArray, brakeYArray, data.payload);
+        //     Plotly.update(pedalGraph, dataUpdate, [1]);
+        // }
     });
 } else {
     // Use CSV file
