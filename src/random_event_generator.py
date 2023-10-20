@@ -136,23 +136,48 @@ SENSORS = {
         "last_sent": 0
     },
     "steering_angle": {
-        "refresh_rate": 0.05,
+        "refresh_rate": 0.1,
         "max" : 90,
         "min": -90,
         "last_sent": 0
     },
     "throttle_pos": {
-        "refresh_rate": 0.05,
+        "refresh_rate": 0.1,
         "max" : 100,
         "min": 0,
         "last_sent": 0
     },
     "brake_pos": {
-        "refresh_rate": 0.05,
+        "refresh_rate": 0.1,
         "max" : 100,
         "min": 0,
         "last_sent": 0
     },
+    "FL_suspension": {
+        "refresh_rate": 0.2,
+        "max" : 100,
+        "min": -50,
+        "last_sent": 0
+    },
+    "FR_suspension": {
+        "refresh_rate": 0.2,
+        "max" : 100,
+        "min": -50,
+        "last_sent": 0
+    },
+    "RL_suspension": {
+        "refresh_rate": 0.2,
+        "max" : 100,
+        "min": -50,
+        "last_sent": 0
+    },
+    "RR_suspension": {
+        "refresh_rate": 0.2,
+        "max" : 100,
+        "min": -50,
+        "last_sent": 0
+    },
+
 }
 
 class RandomEventGenerator(BaseEventGenerator):

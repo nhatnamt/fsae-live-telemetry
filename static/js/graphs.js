@@ -21,13 +21,54 @@ var gForceTrace = {
         width: 2
     }
 };
-var suspensionTrace = {
+
+var FL_suspensionTrace = {
     x: [],
     y: [],
-    name: "Suspension travel",
-    mode: "lines+markers",
+    name: "Front Left",
+    mode: "lines",
     type: "line",
+    line: {
+        color: '#fff',
+        width: 1
+    }
 };
+
+var FR_suspensionTrace = {
+    x: [],
+    y: [],
+    name: "Front Right",
+    mode: "lines",
+    type: "line",
+    line: {
+        color: '#f00',
+        width: 1
+    }
+}
+
+var RL_suspensionTrace = {
+    x: [],
+    y: [],
+    name: "Rear Left",
+    mode: "lines",
+    type: "line",
+    line: {
+        color: '#0f0',
+        width: 1
+    }
+}
+
+var RR_suspensionTrace = {
+    x: [],
+    y: [],
+    name: "Rear Right",
+    mode: "lines",
+    type: "line",
+    line: {
+        color: '#00f',
+        width: 1
+    }
+}
 
 var steeringTrace = {
     x: [],
@@ -49,7 +90,7 @@ var throttleTrace = {
     type: "line",
     line: {
         color: '#00ff00',
-        width: 2
+        width: 1
     }
 
 };
@@ -61,7 +102,7 @@ var brakeTrace = {
     type: "line",
     line: {
         color: '#ff0000',
-        width: 2
+        width: 1
     }
 };
 
@@ -118,7 +159,7 @@ var suspensionLayout = {
     },
     yaxis: {
         title: 'Travel (mm)',
-        range: [-100, 200],
+        range: [-100, 150],
         automargin: true,
         gridcolor: gridColor,
         zerolinecolor: zerolineColor,
@@ -129,7 +170,6 @@ var suspensionLayout = {
       size: 14,
       color: "#fff",
     },
-    colorway: ["#00008B"],
     margin: margin,
 };
 
@@ -198,7 +238,7 @@ graphConfig
 
 Plotly.newPlot(
     suspensionGraph,
-    [suspensionTrace],
+    [FL_suspensionTrace, FR_suspensionTrace, RL_suspensionTrace, RR_suspensionTrace],
     suspensionLayout,
     graphConfig
 );
@@ -228,6 +268,15 @@ let throttleYArray = [];
 
 let brakeXArray = [];
 let brakeYArray = [];
+
+let FL_suspensionXArray = [];
+let FL_suspensionYArray = [];
+let FR_suspensionXArray = [];
+let FR_suspensionYArray = [];
+let RL_suspensionXArray = [];
+let RL_suspensionYArray = [];
+let RR_suspensionXArray = [];
+let RR_suspensionYArray = [];
 
 // The maximum number of data points displayed on scatter/line graph
 let MAX_GRAPH_POINTS = 50;
@@ -270,10 +319,25 @@ if (csv_url === null) {
             dataUpdate = updateCharts(throttleXArray, throttleYArray, data.payload);
             Plotly.update(pedalGraph, dataUpdate, {}, [0]);
         }
-
         if (data.id == 'brake_pos') {
             dataUpdate = updateCharts(brakeXArray, brakeYArray, data.payload);
             Plotly.update(pedalGraph, dataUpdate, {}, [1]);
+        }
+        if (data.id == 'FL_suspension') {
+            dataUpdate = updateCharts(FL_suspensionXArray, FL_suspensionYArray, data.payload);
+            Plotly.update(suspensionGraph, dataUpdate, {}, [0]);
+        }
+        if (data.id == 'FR_suspension') {
+            dataUpdate = updateCharts(FR_suspensionXArray, FR_suspensionYArray, data.payload);
+            Plotly.update(suspensionGraph, dataUpdate, {}, [1]);
+        }
+        if (data.id == 'RL_suspension') {
+            dataUpdate = updateCharts(RL_suspensionXArray, RL_suspensionYArray, data.payload);
+            Plotly.update(suspensionGraph, dataUpdate, {}, [2]);
+        }
+        if (data.id == 'RR_suspension') {
+            dataUpdate = updateCharts(RR_suspensionXArray, RR_suspensionYArray, data.payload);
+            Plotly.update(suspensionGraph, dataUpdate, {}, [3]);
         }
 
         // if (data.id == 'brake_pos') {
