@@ -6,6 +6,7 @@ var pedalGraph = document.getElementById('pedal-graph');
 var graphConfig = {
     displayModeBar: false,
     responsive: true,
+    staticPlot: true
   };
 
 /* -------------------------------------------------------------------------- */
@@ -17,7 +18,7 @@ var gForceTrace = {
     type: 'scatter',
     mode: 'markers',
     line: {
-        color: '#ff0000',
+        color: '#444',
         width: 2
     }
 };
@@ -240,7 +241,8 @@ Plotly.newPlot(
     suspensionGraph,
     [FL_suspensionTrace, FR_suspensionTrace, RL_suspensionTrace, RR_suspensionTrace],
     suspensionLayout,
-    graphConfig
+    graphConfig,
+    
 );
 
 Plotly.newPlot(
@@ -278,6 +280,11 @@ let RL_suspensionYArray = [];
 let RR_suspensionXArray = [];
 let RR_suspensionYArray = [];
 
+let gForceXxArray = [];
+let gForceXyArray = [];
+let gForceYxArray = [];
+let gForceYyArray = [];
+
 // The maximum number of data points displayed on scatter/line graph
 let MAX_GRAPH_POINTS = 50;
 let ctr = 0;
@@ -308,6 +315,8 @@ var FL_suspensionData;
 var FR_suspensionData;
 var RL_suspensionData;
 var RR_suspensionData;
+var gForceXData;
+var gForceYData;
 
 // Check if URL points to a CSV file
 var csv_data;
@@ -339,6 +348,12 @@ if (csv_url === null) {
         if (data.id == 'RR_suspension') {
             RR_suspensionData = updateCharts(RR_suspensionXArray, RR_suspensionYArray, data.payload);
         }
+        if (data.id == 'gforce_x') {
+            gForceXData = updateCharts(gForceXxArray, gForceXyArray, data.payload);
+        }
+        if (data.id == 'gforce_y') {
+            gForceYData = updateCharts(gForceYxArray, gForceYyArray, data.payload);
+        }
     });
 } else {
     // Use CSV file
@@ -361,6 +376,8 @@ if (csv_url === null) {
         });
     });
 }
+var scatterColors = new Array(MAX_GRAPH_POINTS).fill('#aaa');
+scatterColors[49] = '#f00';
 
 function updateAllGraphs() {
     Plotly.update(steeringGraph, steeringData);
@@ -370,6 +387,18 @@ function updateAllGraphs() {
     Plotly.update(suspensionGraph, FR_suspensionData, {}, [1]);
     Plotly.update(suspensionGraph, RL_suspensionData, {}, [2]);
     Plotly.update(suspensionGraph, RR_suspensionData, {}, [3]);
+
+    console.log(gForceXxArray);
+    var gForceData = {
+        x: gForceXData.y,
+        y: gForceYData.y,
+      };
+    
+    //console.log(gForceData);
+    Plotly.update(gForceGraph, gForceData);
+    var update = {'marker':{color: scatterColors, size: 10}};
+    Plotly.restyle(gForceGraph, update, [0]);
+  
 }
 
 setInterval(updateAllGraphs, 100);

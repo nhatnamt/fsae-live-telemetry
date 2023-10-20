@@ -177,7 +177,18 @@ SENSORS = {
         "min": -50,
         "last_sent": 0
     },
-
+    "gforce_x": {
+        "refresh_rate": 0.1,
+        "max" : 1.5,
+        "min": -1.5,
+        "last_sent": 0
+    },
+    "gforce_y": {
+        "refresh_rate": 0.1,
+        "max" : 1.5,
+        "min": -1.5,
+        "last_sent": 0
+    },
 }
 
 class RandomEventGenerator(BaseEventGenerator):
