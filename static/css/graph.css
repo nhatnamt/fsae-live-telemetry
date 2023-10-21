@@ -13,3 +13,7 @@
     overflow: hidden;
     border-radius: 10px;
   }
+  #gforce-graph {
+    width: 800px;
+    height: 400px;
+  }
