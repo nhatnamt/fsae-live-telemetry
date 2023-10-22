@@ -17,7 +17,8 @@ CONFIGURATION_STORAGE = 'vehicle_configurations.json'
 # download JS dependencies
 JS_LIB_FOLDER = "static/js/lib"
 JS_DEPENDENCIES = {
-    "d3.min.js": "https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"
+    "d3.min.js": "https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js",
+    "plotly.min.js": "https://cdn.plot.ly/plotly-2.26.0.min.js",
 }
 
 if not os.path.exists(JS_LIB_FOLDER):

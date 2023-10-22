@@ -1,5 +1,5 @@
 {
-    "typeAcquisition": {
-      "include": ["d3"]
-    }
+  "typeAcquisition": {
+    "include": ["d3", "plotly.js"]
   }
+}
