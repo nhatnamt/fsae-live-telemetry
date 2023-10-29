@@ -1,19 +1,14 @@
 .graph-container {
-    min-height: 100%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;    
     margin: 0 10px;
+    flex: 1;
   }
   .graph-container > div {
     flex-basis: calc(50% - 20px);  
     justify-content: center;
-    flex-direction: column;
     margin: 10px;
     overflow: hidden;
     border-radius: 10px;
-  }
-  #gforce-graph {
-    width: 800px;
-    height: 400px;
   }

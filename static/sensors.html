@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Swinburne FSAE Telemetry</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sensors.css">
     <script src="js/lib/d3.min.js" defer></script>
     <script src="js/sensors.js" defer></script>
 </head>
 <body>
+<div class="wrapper">
     <div class="topnav">
         <img class = "logo-image" src="img/symbol.png" >
         <ul>
@@ -23,13 +25,13 @@
     </div>
 
     <h1>Swinburne FSAE Telemetry</h1>
-    <select id="csv">
+    <!-- <select id="csv">
         <option value="">Real-time data</option>
-    </select>
-    <div class="flex">
+    </select> -->
+    <div class="flex flex-container">
         <div class="column-4">
             <div class="row">
-                <h3>Front Left Corner</h3>
+                <h2>Front Left Corner</h2>
                 <div class="text-data">
                     <h4>Motor Temperature</h4>
                     <p id="FL_temp" class="value">0</p>
@@ -57,7 +59,7 @@
                 </div>
             </div>
             <div class="row">
-                <h3>Rear Left Corner</h3>
+                <h2>Rear Left Corner</h2>
                 <div class="text-data">
                     <h4>Motor Temperature</h4>
                     <p id="RL_temp" class="value">0</p>
@@ -90,7 +92,7 @@
         </div>
         <div class="column-4">
             <div class="row">
-                <h3>Front Right Corner</h3>
+                <h2>Front Right Corner</h2>
                 <div class="text-data">
                     <h4>Motor Temperature</h4>
                     <p id="FR_temp" class="value">0</p>
@@ -118,7 +120,7 @@
                 </div>
             </div>
             <div class="row">
-                <h3>Rear Right Corner</h3>
+                <h2>Rear Right Corner</h2>
                 <div class="text-data">
                     <h4>Motor Temperature</h4>
                     <p id="RR_temp" class="value">0</p>
@@ -148,7 +150,7 @@
         </div>
         <div class="column-4">
             <div class="row">
-                <h3>Cooling</h3>
+                <h2>Cooling</h2>
                 <div class="text-data">
                     <h4>Left Loop Temperature</h4>
                     <p id="left_coolant_temp" class="value">0</p>
@@ -174,9 +176,9 @@
                     </svg>
                 </div>
             </div>
-            <div class="row">
-                <h3>Battery</h3>
-                <div class="text-data">
+            <div class="row flex row-wrap">
+                <h2 class ="column">Battery</h2>
+                <div class="text-data column-2">
                     <h4>Cell max voltage</h4>
                     <p id="cell_max_voltage" class="value">0</p>
                     <p class="unit">V</p>
@@ -184,7 +186,7 @@
                         <rect width="3" height="1" fill="red" />
                     </svg>
                 </div>
-                <div class="text-data">
+                <div class="text-data column-2">
                     <h4>Cell min voltage</h4>
                     <p id="cell_min_voltage" class="value">0</p>
                     <p class="unit">V</p>
@@ -192,7 +194,7 @@
                         <rect width="3" height="1" fill="red" />
                     </svg>
                 </div>
-                <div class="text-data">
+                <div class="text-data column">
                     <h4>Pack voltage</h4>
                     <p id="pack_voltage" class="value">0</p>
                     <p class="unit">V</p>
@@ -200,7 +202,7 @@
                         <rect width="500" height="1" fill="red" />
                     </svg>
                 </div>
-                <div class="text-data">
+                <div class="text-data column">
                     <h4>Pack power</h4>
                     <p id="pack_power" class="value">0</p>
                     <p class="unit">W</p>
@@ -208,7 +210,7 @@
                         <rect width="50" height="1" fill="red" />
                     </svg>
                 </div>
-                <div class="text-data">
+                <div class="text-data column">
                     <h4>Current Temperature</h4>
                     <p id="current_temp" class="value">0</p>
                     <p class="unit">&deg;C</p>
@@ -216,7 +218,7 @@
                         <rect width="50" height="1" fill="red" />
                     </svg>
                 </div>
-                <div class="text-data">
+                <div class="text-data column">
                     <h4>LV Battery</h4>
                     <p id="lv_battery" class="value">0</p>
                     <p class="unit">V</p>
@@ -226,6 +228,7 @@
                 </div>
             </div>
         </div>
-    </div.row>
+    </div>
+</div>
 </body>
 </html>

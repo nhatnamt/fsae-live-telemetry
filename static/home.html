@@ -11,47 +11,48 @@
 
 </head>
 <body>
-    <div class="topnav">
-            <img class = "logo-image" src="img/symbol.png" >
-        <ul>
-          <li><a href="home.html">HOME</a></li>
-          <li><a href="configuration.html">CONFIGURATION</a></li>
-		  <li><a href="graphs.html">GRAPHS</a></li>
-          <li><a href="sensors.html">SENSORS</a></li>
-          <li><a href="test.html">TEST</a></li>
-          <li><a href="about.html">TEAM</a></li>
-        </ul>
-			<div class="trapezoid"></div>
-    </div>
+	<div class="wrap">
+		<div class="topnav">
+				<img class = "logo-image" src="img/symbol.png" >
+			<ul>
+			<li><a href="home.html">HOME</a></li>
+			<li><a href="configuration.html">CONFIGURATION</a></li>
+			<li><a href="graphs.html">GRAPHS</a></li>
+			<li><a href="sensors.html">SENSORS</a></li>
+			<li><a href="test.html">TEST</a></li>
+			<li><a href="about.html">TEAM</a></li>
+			</ul>
+				<div class="trapezoid"></div>
+		</div>
 
-	<div class="playback-container">
-		<div>
-			<select class="playback-speed-select">
-				<option value="0.5x">0.5x</option>
-				<option value="1x" selected>1x</option>
-				<option value="2x">2x</option>
-			</select>
-			<div id="play-pause" class="play"></div>
-			<div class="playback-progress">
-				<div class="playblack-pointer"></div>
+		<div class="playback-container">
+			<div>
+				<select class="playback-speed-select">
+					<option value="0.5x">0.5x</option>
+					<option value="1x" selected>1x</option>
+					<option value="2x">2x</option>
+				</select>
+				<div id="play-pause" class="play"></div>
+				<div class="playback-progress">
+					<div class="playblack-pointer"></div>
+				</div>
 			</div>
 		</div>
+
+		<h1>Tests - Swinburne FSAE Telemetry</h1>
+		<br>
+
+		<h2>Session record, playblack and raw data</h2>
+
+		<div id="session">
+			<button>Start Session</button>
+			<button>Stop Session</button>
+			<select id="csv">
+				<option value="">Real-time data</option>
+			</select>
+			<button>Play</button>
+			<button>Delete</button>
+		</div>
 	</div>
-
-    <h1>Tests - Swinburne FSAE Telemetry</h1>
-	<br>
-
-    <h2>Session record, playblack and raw data</h2>
-
-	<div id="session">
-		<button>Start Session</button>
-		<button>Stop Session</button>
-		<select id="csv">
-			<option value="">Real-time data</option>
-		</select>
-		<button>Play</button>
-		<button>Delete</button>
-	</div>
-
 </body>
 </html>
